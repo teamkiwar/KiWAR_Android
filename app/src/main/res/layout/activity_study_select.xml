@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".study.StudySelectActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:focusable="true"
+        android:background="#6633B5E5"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:textSize="20dp"
+            android:text="어떤 친구들을 만나볼까요?"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_dict_sel_animal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="동물"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_dict_sel_plant"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="식물"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_dict_sel_bug"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="곤충"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_dict_sel_dinasour"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="공룡"
+        android:layout_weight="1"/>
+
+</LinearLayout>
