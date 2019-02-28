@@ -12,8 +12,6 @@
         android:name="android.hardware.camera.ar"
         android:required="true" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,23 +31,31 @@
         </activity>
 
         <meta-data
+            android:name="com.google.android.ar.API_KEY"
+            android:value="AIzaSyBIiJdNLuWI_2v4Y_RmbuS2Hd_OdEJ0L9Y"
+            />
+
+        <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />
 
         <activity android:name=".play.catchgame.CatchActivity" />
         <activity android:name=".deco.DecoActivity" />
         <activity android:name=".study.StudyActivity" />
-        <activity android:name=".study.StudySelectActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".study.StudyAlignActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".study.StudyCardActivity"
+        <activity
+            android:name=".study.StudySelectActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".study.StudyAlignActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".study.StudyCardActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         </activity>
+        <activity android:name=".placement.PlaceActivity">
 
-
+        </activity>
     </application>
-
-
 
 </manifest>
