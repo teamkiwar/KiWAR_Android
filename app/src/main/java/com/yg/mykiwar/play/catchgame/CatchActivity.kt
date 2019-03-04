@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.ar.core.Anchor
-import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Vector3
@@ -45,9 +44,9 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
         val sceneFromFragment = catch_sceneform_fragment as ArFragment
 
         sceneFromFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
-            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
-                return@setOnTapArPlaneListener
-            }
+//            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
+//                return@setOnTapArPlaneListener
+//            }
             val anchor = hitResult.createAnchor()
             for (i in 0..15) {
                 when (i / 5) {

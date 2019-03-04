@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.ar.core.Anchor
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
@@ -30,6 +31,8 @@ class PlaceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place)
+
+        setNewCloudAnchor(null)
 
         fragment = fragment_place as PlaceFragment
         fragment.planeDiscoveryController.hide()
@@ -121,6 +124,7 @@ class PlaceActivity : AppCompatActivity() {
             if (cloudState.isError) {
                 snackbarHelper.showMessageWithDismiss(this, "Error resloving anchor... ${cloudState}")
                 placeAnchorState = PlaceAnchorState.NONE
+                Log.v("error",cloudState.toString())
             } else if (cloudState == Anchor.CloudAnchorState.SUCCESS) {
                 //SharedPreferenceController.setId(this, cloudAnchor!!.cloudAnchorId, "P")
                 snackbarHelper.showMessageWithDismiss(this, "success... ${cloudAnchor!!.cloudAnchorId}")

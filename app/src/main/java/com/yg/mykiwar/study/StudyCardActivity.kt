@@ -53,11 +53,11 @@ class StudyCardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_study_card)
         CurrentActivity.activity = this
         paramUri = Uri.parse("assets://${packageName}/models/andy.obj")
-        otherUri = Uri.parse("assets://${packageName}/models/ship.obj")
+        otherUri = Uri.parse("assets://${packageName}/models/Mesh_Cat.obj")
         //initPresenter()
 
         datas.add(Uri.parse("assets://${packageName}/models/andy.obj"))
-        datas.add(Uri.parse("assets://${packageName}/models/cat.obj"))
+        datas.add(Uri.parse("assets://${packageName}/models/Mesh_Cat.obj"))
         datas.add(Uri.parse("assets://${packageName}/models/dog.obj"))
         datas.add(Uri.parse("assets://${packageName}/models/Giraffe.obj"))
         datas.add(Uri.parse("assets://${packageName}/models/penguin.obj"))
