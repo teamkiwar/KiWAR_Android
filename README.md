@@ -1,2 +1,2 @@
-# KiWAR_Android
+# 우리 아이 AR 단어장
 키워 안드로이드
