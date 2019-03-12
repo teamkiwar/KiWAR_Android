@@ -4,7 +4,7 @@
       name: 'lambert2SG',
       parameters: [
         {
-          baseColor: 'Tex_Cat',
+          baseColor: 'Tex_Penguin',
         },
         {
           baseColorTint: [
@@ -34,16 +34,16 @@
       'Orientation',
     ],
     collision: {},
-    file: 'sampledata/cat/Mesh_Cat.obj',
-    name: 'Mesh_Cat',
+    file: 'sampledata/penguin/Mesh_Penguin.obj',
+    name: 'Mesh_Penguin',
     recenter: 'root',
-    scale: 0.004,
+    scale: 0.00099,
   },
   samplers: [
     {
-      file: 'sampledata/cat/Tex_Cat.png',
-      name: 'Tex_Cat',
-      pipeline_name: 'Tex_Cat.png',
+      file: 'sampledata/penguin/Tex_Penguin.png',
+      name: 'Tex_Penguin',
+      pipeline_name: 'Tex_Penguin.png',
     },
   ],
   version: '0.54:1',

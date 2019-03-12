@@ -62,7 +62,13 @@ dependencies {
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-sceneform.asset('sampledata/penguin/penguin.obj',
+
+sceneform.asset('sampledata/penguin/Mesh_Penguin.obj',
         'default',
-        'sampledata/penguin/penguin.sfa',
+        'sampledata/penguin/Mesh_Penguin.sfa',
         'src/main/assets/penguin')
+
+sceneform.asset('sampledata/cat/Mesh_Cat.obj',
+        'default',
+        'sampledata/cat/Mesh_Cat.sfa',
+        'src/main/assets/cat')

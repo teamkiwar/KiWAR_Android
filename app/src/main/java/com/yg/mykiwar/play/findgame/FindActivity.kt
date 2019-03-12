@@ -108,6 +108,11 @@ class FindActivity : AppCompatActivity() {
 //            setAnswerList(name)
 //            this.anchorNode = anchorNode
 //            selectedNode = node
+            if (name == "펭귄") {
+                anchorNode.removeChild(node)
+                Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
+            } else
+                Toast.makeText(this, "다시 생각해보세요.", Toast.LENGTH_SHORT).show()
             node.select()
         }
     }

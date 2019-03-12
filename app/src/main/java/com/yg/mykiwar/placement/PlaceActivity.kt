@@ -47,7 +47,7 @@ class PlaceActivity : AppCompatActivity() {
             placeAnchorState = PlaceAnchorState.HOSTING
             snackbarHelper.showMessage(this, "Now hosting anchor...")
 
-            placeObject(fragment, cloudAnchor, Uri.parse("penguin.sfb"))
+            placeObject(fragment, cloudAnchor, Uri.parse("penguin1.sfb"))
         }
 
         btn_place_clean.setOnClickListener {
@@ -58,7 +58,7 @@ class PlaceActivity : AppCompatActivity() {
             val cloudAnchorId = SharedPreferenceController.getId(this, "P")
             val resolvedAnchor = fragment.arSceneView.session.resolveCloudAnchor(cloudAnchorId)
             setNewCloudAnchor(resolvedAnchor)
-            placeObject(fragment, cloudAnchor, Uri.parse("penguin.sfb"))
+            placeObject(fragment, cloudAnchor, Uri.parse("penguin1.sfb"))
             snackbarHelper.showMessage(this, "Now Resolving Anchor")
             placeAnchorState = PlaceAnchorState.RESOLVING
         }

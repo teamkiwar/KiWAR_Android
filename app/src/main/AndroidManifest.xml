@@ -38,33 +38,34 @@
             android:name="com.google.ar.core"
             android:value="optional" />
 
-        <activity android:name=".play.catchgame.CatchActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".deco.DecoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".study.StudyActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".play.catchgame.CatchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".deco.DecoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".study.StudyActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".study.StudySelectActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".study.StudyAlignActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".study.StudyCardActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".placement.PlaceActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".play.findgame.FindActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".placement.PlaceActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".play.findgame.FindActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".play.PlaySelectActivity"></activity>
     </application>
 
 </manifest>
