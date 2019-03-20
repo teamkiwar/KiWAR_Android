@@ -16,6 +16,8 @@
         app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
+        android:background="#ffffff"
+        android:textSize="48sp"
         android:id="@+id/tv_find_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,0 +1,50 @@
+{
+  materials: [
+    {
+      name: 'BisonPlains_mat',
+      parameters: [
+        {
+          baseColor: 'BisonPlains_BaseColor',
+        },
+        {
+          baseColorTint: [
+            0.5,
+            0.5,
+            0.5,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/buffalo/BisonPlains.obj',
+    name: 'BisonPlains',
+    recenter: 'root',
+    scale: 0.015,
+  },
+  samplers: [
+    {
+      file: 'sampledata/buffalo/BisonPlains_BaseColor.png',
+      name: 'BisonPlains_BaseColor',
+      pipeline_name: 'BisonPlains_BaseColor.png',
+    },
+  ],
+  version: '0.54:1',
+}

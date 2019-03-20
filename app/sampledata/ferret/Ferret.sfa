@@ -1,0 +1,50 @@
+{
+  materials: [
+    {
+      name: 'Ferret_Mat',
+      parameters: [
+        {
+          baseColor: 'Ferret_BaseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/ferret/Ferret.obj',
+    name: 'Ferret',
+    recenter: 'root',
+    scale: 0.096,
+  },
+  samplers: [
+    {
+      file: 'sampledata/ferret/Ferret_BaseColor.png',
+      name: 'Ferret_BaseColor',
+      pipeline_name: 'Ferret_BaseColor.png',
+    },
+  ],
+  version: '0.54:1',
+}

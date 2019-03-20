@@ -31,6 +31,7 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var anchorNode: AnchorNode
     private lateinit var selectedNode: Node
     var setting = false
+    val request = 1001
 
     private val logoutCustomDialog: CustomDialog  by lazy {
         CustomDialog(this@CatchActivity, "로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?", responseRight, responseLeft, "취소", "확인")
@@ -43,23 +44,15 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
 
         val sceneFromFragment = catch_sceneform_fragment as ArFragment
 
-        sceneFromFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
+        sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
 //            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
 //                return@setOnTapArPlaneListener
 //            }
             val anchor = hitResult.createAnchor()
-            for (i in 0..15) {
-                when (i / 5) {
-                    0 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("cat.sfb"), "고양이")
-                    }
-                    1 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("penguin.sfb"), "펭귄")
-                    }
-                    2 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("dog.sfb"), "개")
-                    }
-                }
+            for (i in 0..10) {
+                val name = AnimalList.animalList[Random().nextInt(21)]
+                val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
+                placeObject(sceneFromFragment, anchor, nameUrl, name)
             }
             sceneFromFragment.setOnTapArPlaneListener(null)
         }
@@ -84,10 +77,10 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
         val node = TransformableNode(fragment.transformationSystem)
         node.renderable = renderable
         node.setParent(anchorNode)
-        Vector3(0.1f, 0.1f, 0.1f)
-        val x = Random().nextInt(10) / 10f
-        val y = Random().nextInt(10) / 10f
-        val z = Random().nextInt(10) / 10f
+        Vector3(0f, 0f, 0f)
+        val x = Random().nextInt(15) / 10f
+        val y = Random().nextInt(15) / 10f
+        val z = Random().nextInt(15) / 10f
         node.localPosition = Vector3(x, y, z)
         fragment.arSceneView.scene.addChild(anchorNode)
         node.setOnTapListener { _, _ ->
@@ -98,6 +91,10 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
             this.anchorNode = anchorNode
             selectedNode = node
             node.select()
+            //img_catch_clicked.setImageResource()
+//            val intent = Intent(this, CatchAnswerActivity::class.java)
+//            intent.putExtra("name", name)
+//            startActivityForResult(intent, request)
         }
     }
 

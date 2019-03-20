@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 import com.yg.mykiwar.placement.PlaceActivity
 import com.yg.mykiwar.play.PlaySelectActivity
-import com.yg.mykiwar.study.StudySelectActivity
+import com.yg.mykiwar.study.StudyCardActivity
 import com.yg.mykiwar.util.helper.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_main_study.setOnClickListener {
-            startActivity(Intent(this, StudySelectActivity::class.java))
+            startActivity(Intent(this, StudyCardActivity::class.java))
         }
     }
 }

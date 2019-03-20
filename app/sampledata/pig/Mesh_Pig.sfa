@@ -1,0 +1,50 @@
+{
+  materials: [
+    {
+      name: 'lambert2SG',
+      parameters: [
+        {
+          baseColor: 'Tex_Pig',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/pig/Mesh_Pig.obj',
+    name: 'Mesh_Pig',
+    recenter: 'root',
+    scale: 0.001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/pig/Tex_Pig.png',
+      name: 'Tex_Pig',
+      pipeline_name: 'Tex_Pig.png',
+    },
+  ],
+  version: '0.54:1',
+}

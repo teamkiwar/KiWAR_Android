@@ -16,6 +16,7 @@ import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
+import com.yg.mykiwar.util.AnimalList
 import kotlinx.android.synthetic.main.activity_find.*
 import java.util.*
 
@@ -23,33 +24,27 @@ import java.util.*
 
 class FindActivity : AppCompatActivity() {
 
+    lateinit var answer : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find)
 
-
         val sceneFromFragment = find_sceneform_fragment as ArFragment
+        answer = AnimalList.animalList[Random().nextInt(AnimalList.animalList.size)]
+
 
         sceneFromFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
             if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
                 return@setOnTapArPlaneListener
             }
             val quizAnchor = hitResult.createAnchor()
-            placeQuiz(sceneFromFragment, quizAnchor, "펭귄")
+            placeQuiz(sceneFromFragment, quizAnchor, answer)
 
             val anchor = hitResult.createAnchor()
-            for (i in 0..15) {
-                when (i / 5) {
-                    0 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("cat.sfb"), "고양이")
-                    }
-                    1 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("penguin.sfb"), "펭귄")
-                    }
-                    2 -> {
-                        placeObject(sceneFromFragment, anchor, Uri.parse("dog.sfb"), "개")
-                    }
-                }
+            for (i in 0..10) {
+                val name = AnimalList.animalList[Random().nextInt(21)]
+                val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
+                placeObject(sceneFromFragment, anchor, nameUrl, name)
             }
             sceneFromFragment.setOnTapArPlaneListener(null)
         }
@@ -59,6 +54,7 @@ class FindActivity : AppCompatActivity() {
         if (tv_find_quiz.parent != null) {
             (tv_find_quiz.parent as ViewGroup).removeView(tv_find_quiz) // <- fix
         }
+
         //find_layout.addView(tv_find_quiz)
         tv_find_quiz.text = quiz
         ViewRenderable.builder()
@@ -95,10 +91,10 @@ class FindActivity : AppCompatActivity() {
         val node = TransformableNode(fragment.transformationSystem)
         node.renderable = renderable
         node.setParent(anchorNode)
-        Vector3(0.1f, 0.1f, 0.1f)
-        val x = Random().nextInt(10) / 10f
-        val y = Random().nextInt(10) / 10f
-        val z = Random().nextInt(10) / 10f
+        Vector3(0f, 0f, 0f)
+        val x = Random().nextInt(15) / 10f
+        val y = Random().nextInt(15) / 10f
+        val z = Random().nextInt(15) / 10f
         node.localPosition = Vector3(x, y, z)
         fragment.arSceneView.scene.addChild(anchorNode)
         node.setOnTapListener { _, _ ->
@@ -108,7 +104,7 @@ class FindActivity : AppCompatActivity() {
 //            setAnswerList(name)
 //            this.anchorNode = anchorNode
 //            selectedNode = node
-            if (name == "펭귄") {
+            if (name == answer) {
                 anchorNode.removeChild(node)
                 Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
             } else

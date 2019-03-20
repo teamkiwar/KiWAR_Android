@@ -1,13 +1,13 @@
 package com.yg.mykiwar.study.card
 
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yg.mykiwar.R
+import com.yg.mykiwar.study.StudyScanActivity
 import kotlinx.android.synthetic.main.fragment_study_card.*
 
 class StudyCardFragment : Fragment() {
@@ -16,34 +16,29 @@ class StudyCardFragment : Fragment() {
     var gLView : StudyCardSurfaceView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_study_card, container, false)
-        return v
+        return inflater.inflate(R.layout.fragment_study_card, container, false)
     }
 
     override fun onStart() {
         super.onStart()
-        tv_study_card.text = arguments!!.getString("imageName")
-        Log.v("왔다", arguments!!.getString("imageUri"))
-        scene = StudyCardSceneLoader(this, Uri.parse(arguments!!.getString("imageUri")))
-        scene.init()
-        gLView = StudyCardSurfaceView(this)
-//        scene = StudyCardSceneLoader(activity as StudyCardActivity, Uri.parse(arguments!!.getString("imageUri")))
-//        CurrentActivity.scene = scene
-//        scene.init()
-        layout_study_card.addView(gLView)
+        val name = arguments!!.getString("imageName")
+        tv_study_card.text = name
+        img_study_card.setBackgroundResource(arguments!!.getInt("imageUri"))
+        btn_study_scan.setOnClickListener {
+            val intent = Intent(context, StudyScanActivity::class.java)
+            intent.putExtra("name", name)
+            activity!!.startActivity(intent)
+        }
     }
 
     companion object {
-        fun create(imageName: String, imageUri : Uri?): StudyCardFragment {
+        fun create(imageName: String, imageUri : Int): StudyCardFragment {
             val fragment = StudyCardFragment()
             val args = Bundle()
             args.putString("imageName", imageName)
-            args.putString("imageUri", imageUri!!.toString())
+            args.putInt("imageUri", imageUri)
             fragment.arguments = args
             return fragment
         }
     }
-
-
-
 }

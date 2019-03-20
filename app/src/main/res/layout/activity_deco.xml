@@ -6,10 +6,151 @@
     android:layout_height="match_parent"
     tools:context=".deco.DecoActivity">
 
-    <android.opengl.GLSurfaceView
-        android:id="@+id/surfaceview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="top"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="큰뿔양"
+                />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="버팔로"
+                />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="낙타"
+                />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="소"
+                />
+
+            <Button
+                android:id="@+id/btn_5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="개"
+                />
+
+            <Button
+                android:id="@+id/btn_6"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="코끼리"
+                />
+
+            <Button
+                android:id="@+id/btn_7"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="페럿"
+                />
+
+            <Button
+                android:id="@+id/btn_8"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="여우"
+                />
+
+            <Button
+                android:id="@+id/btn_9"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="가젤"
+                />
+
+            <Button
+                android:id="@+id/btn_10"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="염소"
+                />
+
+            <Button
+                android:id="@+id/btn_11"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="말"
+                />
+
+            <Button
+                android:id="@+id/btn_12"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="사자"
+                />
+
+            <Button
+                android:id="@+id/btn_13"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="쥐"
+                />
+
+            <Button
+                android:id="@+id/btn_14"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="수달"
+                />
+
+            <Button
+                android:id="@+id/btn_15"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="팬더"
+                />
+
+            <Button
+                android:id="@+id/btn_16"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="돼지"
+                />
+
+            <Button
+                android:id="@+id/btn_17"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="라쿤"
+                />
+
+            <Button
+                android:id="@+id/btn_18"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="양"
+                />
+
+            <Button
+                android:id="@+id/btn_19"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="뱀"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>
