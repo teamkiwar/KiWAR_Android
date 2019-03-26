@@ -41,8 +41,7 @@ class PlaceActivity : AppCompatActivity() {
         fragment.setOnTapArPlaneListener { hitResult, plane, _ ->
             if((plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) or (placeAnchorState != PlaceAnchorState.NONE))
                 return@setOnTapArPlaneListener
-//            val newAnchor = hitResult.createAnchor()
-            val newAnchor = fragment.arSceneView.session.hostCloudAnchor(hitResult.createAnchor())
+            val newAnchor = fragment.arSceneView.session!!.hostCloudAnchor(hitResult.createAnchor())
             setNewCloudAnchor(newAnchor)
             placeAnchorState = PlaceAnchorState.HOSTING
             snackbarHelper.showMessage(this, "Now hosting anchor...")
@@ -56,7 +55,7 @@ class PlaceActivity : AppCompatActivity() {
 
         btn_place_resolve.setOnClickListener {
             val cloudAnchorId = SharedPreferenceController.getId(this, "P")
-            val resolvedAnchor = fragment.arSceneView.session.resolveCloudAnchor(cloudAnchorId)
+            val resolvedAnchor = fragment.arSceneView.session!!.resolveCloudAnchor(cloudAnchorId)
             setNewCloudAnchor(resolvedAnchor)
             placeObject(fragment, cloudAnchor, Uri.parse("penguin1.sfb"))
             snackbarHelper.showMessage(this, "Now Resolving Anchor")

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
+import com.yg.mykiwar.dict.DictActivity
 import com.yg.mykiwar.placement.PlaceActivity
 import com.yg.mykiwar.play.PlaySelectActivity
 import com.yg.mykiwar.study.StudyCardActivity
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_main_dict.setOnClickListener {
+            startActivity(Intent(this, DictActivity::class.java))
         }
 
         btn_main_study.setOnClickListener {

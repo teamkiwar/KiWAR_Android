@@ -18,6 +18,7 @@ import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
 import com.yg.mykiwar.play.catchgame.adapter.PlayCatchAdapter
 import com.yg.mykiwar.util.AnimalList
+import com.yg.mykiwar.util.CommonData
 import com.yg.mykiwar.util.CustomDialog
 import kotlinx.android.synthetic.main.activity_catch.*
 import java.util.*
@@ -49,6 +50,7 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
 //                return@setOnTapArPlaneListener
 //            }
             val anchor = hitResult.createAnchor()
+            CommonData.anchor = anchor
             for (i in 0..10) {
                 val name = AnimalList.animalList[Random().nextInt(21)]
                 val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")

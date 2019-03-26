@@ -32,8 +32,9 @@
         </activity>
 
         <meta-data
-            android:name="com.google.android.ar.API_KEY"
-            android:value="AIzaSyBIiJdNLuWI_2v4Y_RmbuS2Hd_OdEJ0L9Y" />
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="label" />
+
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />
@@ -58,14 +59,27 @@
         <activity
             android:name=".study.StudyCardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".placement.PlaceActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".play.findgame.FindActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".play.PlaySelectActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".play.PlaySelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".deco.SizeCheckActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".play.catchgame.CatchAnswerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".study.StudyScanActivity" />
+        <activity android:name=".dict.DictActivity"></activity>
     </application>
 
 </manifest>
