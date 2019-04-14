@@ -12,8 +12,6 @@ import kotlinx.android.synthetic.main.fragment_study_card.*
 
 class StudyCardFragment : Fragment() {
 
-    lateinit var scene : StudyCardSceneLoader
-    var gLView : StudyCardSurfaceView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_study_card, container, false)

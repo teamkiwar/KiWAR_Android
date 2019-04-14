@@ -18,7 +18,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.label.FirebaseVisionCloudImageLabelerOptions
-import com.wonderkiln.camerakit.*
 import com.yg.mykiwar.R
 import com.yg.mykiwar.util.AnimalList
 import kotlinx.android.synthetic.main.activity_study_scan.*
@@ -27,6 +26,7 @@ import java.io.IOException
 
 class StudyScanActivity : AppCompatActivity() {
 
+
     private lateinit var arFragment : StudyScanFragment
     private lateinit var name : String
     private lateinit var imageUrl : String
@@ -34,91 +34,58 @@ class StudyScanActivity : AppCompatActivity() {
     private var scanLabel = ""
     private val TAG = "StudyScan"
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_study_scan)
         FirebaseApp.initializeApp(this)
-
-        btn_temp_capture.setOnClickListener {
-            scan_camera.start()
-            scan_camera.captureImage()
-        }
-
-        scan_camera.addCameraKitListener(object : CameraKitEventListener {
-            override fun onVideo(p0: CameraKitVideo?) {
-                Log.v("ygygyg", "11")
-                scan_camera.stopVideo()
-            }
-
-            override fun onEvent(p0: CameraKitEvent?) {
-                Log.v("ygygyg", "12")
-            }
-
-            override fun onImage(p0: CameraKitImage?) {
-                Log.v("ygygyg", "13")
-                var bitmap : Bitmap = p0!!.bitmap
-                bitmap = Bitmap.createScaledBitmap(bitmap, scan_camera.width,
-                        scan_camera.height, false)
-                scan_camera.stop()
-                scanner(bitmap)
-            }
-
-            override fun onError(p0: CameraKitError?) {
-                Log.v("ygygyg", "14")
-                Log.v("ygygyg", p0!!.exception.toString())
-                scan_camera.stop()
-            }
-        })
-        initScan()
-    }
-
-    fun initScan(){
         name = intent.getStringExtra("name")
         imageUrl = "aug/" + AnimalList.getMatch()[name]+".jpeg"
         arFragment = sceneform_scan_fragment as StudyScanFragment
         //arFragment.arSceneView.arFrame.camera.
         arFragment.planeDiscoveryController.hide()
+        val frame = arFragment.arSceneView.arFrame!!.acquireCameraImage()
         arFragment.arSceneView.scene.addOnUpdateListener(this::onUpdateFrame)
+
     }
 
     private fun scanner(bitmap : Bitmap) {
-        Log.v(TAG, "yg3")
         //FirebaseVisionImage.fromByteArray()
         val image = FirebaseVisionImage.fromBitmap(bitmap)
-         val options = FirebaseVisionCloudImageLabelerOptions.Builder()
+        val options = FirebaseVisionCloudImageLabelerOptions.Builder()
             .setConfidenceThreshold(0.7f)
             .build()
         val labeler = FirebaseVision.getInstance().getCloudImageLabeler(options)
         labeler.processImage(image)
                 .addOnSuccessListener { labels ->
                     for(label in labels){
-                        Log.v(TAG, "yg4")
                         scanLabel = label.text
                         Log.v(TAG, "yg " + label.text)
                     }
                 }
                 .addOnFailureListener { e ->
-                    Log.v(TAG, "yg5")
                     Log.v(TAG, e.toString())
                 }
-
     }
 
     fun setUpAugmentedImageDb(config : Config?, session : Session?) : Boolean{
         val bitmap : Bitmap? = loadAugmentedImage()
-        if (bitmap == null){
-            return false
+        return if (bitmap == null){
+            Log.v("들어옴", "a")
+            false
         }else{
+            Log.v("들어옴", "b")
             val augmentedImageDatabase =  AugmentedImageDatabase(session)
             augmentedImageDatabase.addImage(name, bitmap)
             config!!.augmentedImageDatabase = augmentedImageDatabase
-            return true
+            true
         }
     }
 
     private fun loadAugmentedImage() : Bitmap?{
         //여기서 return text를 보고 판명되는 이미지가 모델에 해당하는 동물이면 이것을 띄운다.
-        if(scanLabel == AnimalList.getMatch()[name]!!.toLowerCase()){
+        //if(scanLabel == AnimalList.getMatch()[name]!!.toLowerCase()){
             try {
                 val ins = assets.open(imageUrl)
                 Log.v("들어옴", "d")
@@ -126,9 +93,8 @@ class StudyScanActivity : AppCompatActivity() {
             }catch (e : IOException){
                 Log.v("들어옴", "e")
                 Log.v("LOAD", e.toString())
-
             }
-        }
+        //}
         return null
     }
 
@@ -138,6 +104,7 @@ class StudyScanActivity : AppCompatActivity() {
                 .thenAccept { renderable -> addNodeToScene(fragment, anchor, renderable) }
                 .exceptionally {
                     Toast.makeText(this, "no render", Toast.LENGTH_SHORT).show()
+                    Log.v("트랙6", it.toString())
                     null
                 }
     }
@@ -152,16 +119,18 @@ class StudyScanActivity : AppCompatActivity() {
     }
 
     fun onUpdateFrame(frameTime: FrameTime){
-        try{
-            val captureImage = arFragment.arSceneView.arFrame!!.acquireCameraImage()
-            checkType(captureImage)
-        }catch (e : Exception){
-            Log.v(TAG, e.toString())
-        }
+//        try{
+//            val captureImage = arFragment.arSceneView.arFrame!!.acquireCameraImage()
+//            checkType(captureImage)
+//        }catch (e : Exception){
+//            Log.v(TAG, e.toString())
+//        }
         val frame = arFragment.arSceneView.arFrame
-        Log.v(TAG, "yg1")
         //frame.imageMetadata.getByteArray()
+        //val frame2 = arFragment.arSceneView.arFrame!!.camera.
         val augmentedImages = frame!!.getUpdatedTrackables(AugmentedImage::class.java)
+        //val image = frame.acquireCameraImage()
+        //frame.camera.
         for (augmentedImage in augmentedImages){
             if(augmentedImage.trackingState == TrackingState.TRACKING){
                 if((augmentedImage.name == name) and shouldModel){
@@ -195,4 +164,5 @@ class StudyScanActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeByteArray(byteForBitmap, 0, byteForBitmap.size)
         scanner(bitmap)
     }
+
 }

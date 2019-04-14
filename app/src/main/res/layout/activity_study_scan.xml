@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".study.StudyScanActivity">
 
-    <com.wonderkiln.camerakit.CameraView
-        android:visibility="gone"
-        android:id="@+id/scan_camera"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
     <fragment
         android:id="@+id/sceneform_scan_fragment"
         android:name="com.yg.mykiwar.study.StudyScanFragment"
@@ -20,13 +13,13 @@
         android:layout_height="match_parent"
         />
 
-    <Button
-        android:visibility="gone"
-        android:id="@+id/btn_temp_capture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <org.opencv.android.JavaCameraView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scan_main_surface"
+        android:layoutDirection="ltr"
 
+        />
 
 
 </RelativeLayout>

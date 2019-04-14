@@ -24,11 +24,11 @@ class DictActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dict)
         arFragment = scene_dict_display as ArFragment
-
         for (i in 0..10) {
             val name = AnimalList.animalList[Random().nextInt(21)]
             val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
-            placeObject(arFragment, CommonData.anchor, nameUrl, name)
+            placeObject(arFragment,
+                    CommonData.anchor, nameUrl, name)
         }
     }
 
@@ -47,11 +47,17 @@ class DictActivity : AppCompatActivity() {
         val node = Node()
         node.renderable = renderable
         node.setParent(anchorNode)
-        Vector3(0f, 0f, 0f)
-        val x = Random().nextInt(15) / 10f
+        //Vector3(0f, 0f, 0f)
+        val x = Random().nextInt(15) / 10f - Random().nextInt(1) / 10f
         val y = Random().nextInt(15) / 10f
-        val z = Random().nextInt(15) / 10f
+        val z = -(Random().nextInt(15) / 10f)
         node.localPosition = Vector3(x, y, z)
         arFragment.arSceneView.scene.addChild(anchorNode)
     }
+
+
+//
+//    fun getMemberList(id : String) : RealmResults<AnchorInfo> {
+//        return realm.where(AnchorInfo::class.java).equalTo("id", id).findAll()
+//    }
 }

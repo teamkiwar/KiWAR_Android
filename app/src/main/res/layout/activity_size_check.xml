@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".deco.SizeCheckActivity">
+
+    <Button
+        android:id="@+id/btn_deco_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        />
 
     <fragment
         android:id="@+id/size_fragment"
@@ -12,4 +19,91 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/controlsPanel"
+        android:orientation="horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/panel">
+        <ImageView
+            android:id="@+id/clearButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/clear_drawing"/>
+        <ImageView
+            android:id="@+id/colorPickerIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="14dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_selected_white"
+            android:contentDescription="@string/select_color"/>
+        <ImageView
+            android:id="@+id/undoButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="14dp"
+            android:src="@drawable/ic_undo"
+            android:contentDescription="@string/undo_last_drawing_element"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/colorPanel"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/panel"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/whiteCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_white_circle"
+            android:contentDescription="@string/white_color"/>
+        <ImageView
+            android:id="@+id/redCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_red_circle"
+            android:contentDescription="@string/red_color"/>
+        <ImageView
+            android:id="@+id/greenCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_green_circle"
+            android:contentDescription="@string/green_color"/>
+        <ImageView
+            android:id="@+id/blueCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_blue_circle"
+            android:contentDescription="@string/blue_color"/>
+        <ImageView
+            android:id="@+id/blackCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_black_circle"
+            android:contentDescription="@string/black_color"/>
+        <ImageView
+            android:id="@+id/rainbowCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_rainbow_circle"
+            android:contentDescription="@string/rainbow_color"/>
+    </LinearLayout>
+
+</RelativeLayout>

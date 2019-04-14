@@ -21,6 +21,8 @@ import com.yg.mykiwar.util.AnimalList
 import com.yg.mykiwar.util.CommonData
 import com.yg.mykiwar.util.CustomDialog
 import kotlinx.android.synthetic.main.activity_catch.*
+import java.io.ByteArrayOutputStream
+import java.io.ObjectOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,8 +44,8 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_catch)
-
         val sceneFromFragment = catch_sceneform_fragment as ArFragment
+        //val image = sceneFromFragment.arSceneView.arFrame!!.acquireCameraImage()
 
         sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
 //            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
@@ -51,6 +53,11 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
 //            }
             val anchor = hitResult.createAnchor()
             CommonData.anchor = anchor
+//            insertAnchorInfo(anchor)
+            val baos = ByteArrayOutputStream()
+            val oos = ObjectOutputStream(baos)
+            oos.writeObject(anchor)
+
             for (i in 0..10) {
                 val name = AnimalList.animalList[Random().nextInt(21)]
                 val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
@@ -79,10 +86,10 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
         val node = TransformableNode(fragment.transformationSystem)
         node.renderable = renderable
         node.setParent(anchorNode)
-        Vector3(0f, 0f, 0f)
-        val x = Random().nextInt(15) / 10f
+        //Vector3(0f, 0f, 0f)
+        val x = Random().nextInt(15) / 10f - Random().nextInt(1) / 10f
         val y = Random().nextInt(15) / 10f
-        val z = Random().nextInt(15) / 10f
+        val z = -(Random().nextInt(15) / 10f)
         node.localPosition = Vector3(x, y, z)
         fragment.arSceneView.scene.addChild(anchorNode)
         node.setOnTapListener { _, _ ->
@@ -140,4 +147,20 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "다시 생각해보세요.", Toast.LENGTH_SHORT).show()
         frame_catch_list.visibility = View.GONE
     }
+
+
+
+//    fun getMemberList(id : String) : RealmResults<AnchorInfo> {
+//        return realm.where(AnchorInfo::class.java).equalTo("id", id).findAll()
+//    }
+//
+//    fun insertAnchorInfo(anchor : Anchor){
+//        anchorInfo = AnchorInfo()
+//        anchorInfo.id = "anchor"
+//        anchorInfo.anchor = anchor
+//        realm.beginTransaction()
+//        realm.copyToRealm(anchorInfo)
+//        realm.commitTransaction()
+//    }
+
 }
