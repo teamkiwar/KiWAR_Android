@@ -12,14 +12,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-    <org.opencv.android.JavaCameraView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scan_main_surface"
-        android:layoutDirection="ltr"
-
-        />
-
-
+    
 </RelativeLayout>
