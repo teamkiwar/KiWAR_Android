@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
-import com.yg.mykiwar.deco.DecoActivity
+import com.yg.mykiwar.deco.SizeCheckActivity
 import com.yg.mykiwar.dict.DictActivity
 import com.yg.mykiwar.play.PlaySelectActivity
 import com.yg.mykiwar.study.StudyCardActivity
@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         if (!PermissionHelper.hasCameraPermission(this))
             PermissionHelper.requestCameraPermission(this)
+
+        if(!PermissionHelper.hasReadExternalStoragePermission(this))
+            PermissionHelper.requestReadExternalStoragePermission(this)
+
+        if(!PermissionHelper.hasWriteExternalStoragePermission(this))
+            PermissionHelper.requestWriteExternalStoragePermission(this)
 //        val mainIntent = Intent(this,
 //                KotlinActivity::class.java)
 //        mainIntent.putExtra("text", "text")
@@ -41,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_main_deco.setOnClickListener {
-            startActivity(Intent(this, DecoActivity::class.java))
+            startActivity(Intent(this, SizeCheckActivity::class.java))
         }
 
         btn_main_dict.setOnClickListener {

@@ -4,12 +4,16 @@ import android.graphics.*
 import android.media.Image
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.PixelCopy
 import android.widget.Toast
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.FrameTime
+import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -30,6 +34,7 @@ class StudyScanActivity : AppCompatActivity() {
     private lateinit var arFragment : StudyScanFragment
     private lateinit var name : String
     private lateinit var imageUrl : String
+    private var takeBitmap : Bitmap? = null
     private var shouldModel = true
     private var scanLabel = ""
     private val TAG = "StudyScan"
@@ -43,10 +48,35 @@ class StudyScanActivity : AppCompatActivity() {
         name = intent.getStringExtra("name")
         imageUrl = "aug/" + AnimalList.getMatch()[name]+".jpeg"
         arFragment = sceneform_scan_fragment as StudyScanFragment
-        //arFragment.arSceneView.arFrame.camera.
         arFragment.planeDiscoveryController.hide()
-        val frame = arFragment.arSceneView.arFrame!!.acquireCameraImage()
         arFragment.arSceneView.scene.addOnUpdateListener(this::onUpdateFrame)
+        btn_scan_check.setOnClickListener {
+            scan()
+        }
+    }
+
+    private fun scan(){
+        val view = arFragment.arSceneView
+        takeBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val handlerThread = HandlerThread("PixelCopier")
+        handlerThread.start()
+
+        PixelCopy.request(view, takeBitmap, { copyResult ->
+            if (copyResult == PixelCopy.SUCCESS) {
+                try {
+                    scanner(takeBitmap!!)
+                    Log.v("메소드 캡쳐", "1")
+                } catch (e: IOException) {
+                    Log.v("메소드 캡쳐", "2")
+                    return@request
+                }
+            } else {
+            }
+            Log.v("메소드 캡쳐", "3")
+
+            handlerThread.quitSafely()
+        }, Handler(handlerThread.looper))
+        Log.v("메소드 캡쳐", "4")
 
     }
 
@@ -60,8 +90,10 @@ class StudyScanActivity : AppCompatActivity() {
         labeler.processImage(image)
                 .addOnSuccessListener { labels ->
                     for(label in labels){
-                        scanLabel = label.text
-                        Log.v(TAG, "yg " + label.text)
+                        if(label.text.toLowerCase().contains(AnimalList.getMatch()[name]!!)){
+                            scanLabel = name
+                            return@addOnSuccessListener
+                        }
                     }
                 }
                 .addOnFailureListener { e ->
@@ -70,12 +102,14 @@ class StudyScanActivity : AppCompatActivity() {
     }
 
     fun setUpAugmentedImageDb(config : Config?, session : Session?) : Boolean{
-        val bitmap : Bitmap? = loadAugmentedImage()
+        var bitmap : Bitmap? = loadAugmentedImage()
         return if (bitmap == null){
             Log.v("들어옴", "a")
             false
         }else{
             Log.v("들어옴", "b")
+            if(takeBitmap != null)
+                bitmap = takeBitmap
             val augmentedImageDatabase =  AugmentedImageDatabase(session)
             augmentedImageDatabase.addImage(name, bitmap)
             config!!.augmentedImageDatabase = augmentedImageDatabase
@@ -98,48 +132,61 @@ class StudyScanActivity : AppCompatActivity() {
         return null
     }
 
-    private fun placeObject(fragment : ArFragment, anchor: Anchor, model : Uri){
+    private fun placeObject(fragment : ArFragment, anchor: AnchorNode, model : Uri){
         ModelRenderable.builder().setSource(fragment.context, model)
                 .build()
                 .thenAccept { renderable -> addNodeToScene(fragment, anchor, renderable) }
                 .exceptionally {
                     Toast.makeText(this, "no render", Toast.LENGTH_SHORT).show()
-                    Log.v("트랙6", it.toString())
+                    Log.v("메소드 캡쳐", "5")
                     null
                 }
     }
 
-    fun addNodeToScene(fragment: ArFragment, anchor: Anchor, renderable: Renderable){
-        val anchorNode = AnchorNode(anchor)
+    fun addNodeToScene(fragment: ArFragment, anchor: AnchorNode, renderable: Renderable){
         val node = TransformableNode(fragment.transformationSystem)
         node.renderable = renderable
-        node.setParent(anchorNode)
-        fragment.arSceneView.scene.addChild(anchorNode)
+        node.setParent(anchor)
+        fragment.arSceneView.scene.addChild(anchor)
         node.select()
     }
 
-    fun onUpdateFrame(frameTime: FrameTime){
-//        try{
-//            val captureImage = arFragment.arSceneView.arFrame!!.acquireCameraImage()
-//            checkType(captureImage)
-//        }catch (e : Exception){
-//            Log.v(TAG, e.toString())
-//        }
+    private fun onUpdateFrame(frameTime: FrameTime){
         val frame = arFragment.arSceneView.arFrame
-        //frame.imageMetadata.getByteArray()
-        //val frame2 = arFragment.arSceneView.arFrame!!.camera.
-        val augmentedImages = frame!!.getUpdatedTrackables(AugmentedImage::class.java)
-        //val image = frame.acquireCameraImage()
-        //frame.camera.
-        for (augmentedImage in augmentedImages){
-            if(augmentedImage.trackingState == TrackingState.TRACKING){
-                if((augmentedImage.name == name) and shouldModel){
-                    placeObject(arFragment, augmentedImage.createAnchor(augmentedImage.centerPose),
-                            Uri.parse(AnimalList.getMatch()[name] + ".sfb"))
-                    shouldModel = false
-                }
-            }
+        //val augmentedImages = frame!!.getUpdatedTrackables(AugmentedImage::class.java)
+        Log.v("트래킹", "6")
+        if (arFragment.arSceneView.arFrame!!.camera.trackingState != TrackingState.TRACKING) {
+            return
         }
+        val cameraPos = arFragment.arSceneView.scene.camera.worldPosition
+        val cameraForward = arFragment.arSceneView.scene.camera.forward
+        val position = Vector3.add(cameraPos, cameraForward.scaled(1.0f))
+        val pose = Pose.makeTranslation(position.x, position.y, position.z)
+        Log.v("메소드 캡쳐", "7")
+
+        val anchorNode = AnchorNode(arFragment.arSceneView.session!!.createAnchor(pose))
+        if((scanLabel == name) and shouldModel){
+            Log.v("메소드 캡쳐", "8")
+
+            placeObject(arFragment, anchorNode,
+                    Uri.parse(AnimalList.getMatch()[name] + ".sfb"))
+            shouldModel = false
+        }
+
+
+
+//        for (augmentedImage in augmentedImages){
+//            Log.v("트래킹", "1")
+//            if(augmentedImage.trackingState == TrackingState.TRACKING){
+//                Log.v("트래킹", "2")
+//                if((augmentedImage.name == name) and shouldModel){
+//                    Log.v("트래킹", "3")
+//                    placeObject(arFragment, augmentedImage.createAnchor(augmentedImage.centerPose),
+//                            Uri.parse(AnimalList.getMatch()[name] + ".sfb"))
+//                    shouldModel = false
+//                }
+//            }
+//        }
     }
 
     fun checkType(cameraImage : Image){

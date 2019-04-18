@@ -17,6 +17,9 @@ object PermissionHelper {
     private const val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1001
     private const val READ_EXTERNAL_STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
+
+    private const val WRITE_EXTERNAL_STORAGE_PERMISSION_CODE = 1002
+    private const val WRITE_EXTERNAL_STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
     /**Camera Permission*/
     fun hasCameraPermission(activity : Activity) : Boolean =
             ContextCompat.checkSelfPermission(activity, CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED
@@ -45,6 +48,14 @@ object PermissionHelper {
     fun requestReadExternalStoragePermission(activity : Activity){
         ActivityCompat.requestPermissions(
                 activity, arrayOf(READ_EXTERNAL_STORAGE_PERMISSION), READ_EXTERNAL_STORAGE_PERMISSION_CODE)
+    }
+
+    fun hasWriteExternalStoragePermission(activity : Activity) : Boolean =
+            ContextCompat.checkSelfPermission(activity, WRITE_EXTERNAL_STORAGE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+
+    fun requestWriteExternalStoragePermission(activity : Activity){
+        ActivityCompat.requestPermissions(
+                activity, arrayOf(WRITE_EXTERNAL_STORAGE_PERMISSION), READ_EXTERNAL_STORAGE_PERMISSION_CODE)
     }
 
     //처음에 denied 했을 때 다시 퍼미션 걸게끔 유도하는 함수.

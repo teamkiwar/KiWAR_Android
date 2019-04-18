@@ -4,11 +4,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.google.ar.core.Anchor
 import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
@@ -19,11 +22,15 @@ import com.google.ar.sceneform.rendering.*
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
+import com.yg.mykiwar.deco.adapter.DecoAdapter
+import com.yg.mykiwar.util.AnimalList
 import kotlinx.android.synthetic.main.activity_size_check.*
+import kotlinx.android.synthetic.main.deco_fragment.*
 import java.util.*
 import java.util.concurrent.CompletionException
 
-class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnPeekTouchListener {
+class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnPeekTouchListener, View.OnClickListener {
+
 
     private val TAG = SizeCheckActivity::class.java.simpleName
     private val MIN_OPENGL_VERSION = 3.0
@@ -39,12 +46,37 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
     private val strokes = ArrayList<Stroke>()
     private var material: Material? = null
     private var currentStroke: Stroke? = null
-    var modelRender = false
+    private var modelRender = false
+
+    lateinit var decoAdapter : DecoAdapter
+    lateinit var requestManager : RequestManager
+    lateinit var datas : ArrayList<Int>
+    lateinit var onItemClick : View.OnClickListener
+    var modelUri = "bighornsheep.sfb"
+    var modelName = "큰뿔양"
+    private var modelSelect = 0
+    private var colorSelect = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_size_check)
+        init()
+        sceneFromFragment = size_fragment as ArFragment
+        sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
+            if(!modelRender)
+                return@setOnTapArPlaneListener
+            val anchor = hitResult.createAnchor()
+            placeObject(sceneFromFragment, anchor, Uri.parse(modelUri), modelName)
+        }
+        sceneFromFragment.arSceneView.planeRenderer.isEnabled = false
+        sceneFromFragment.arSceneView.scene.addOnUpdateListener(this)
+        sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(this)
+        setUpColorPickerUi()
+        //setRule()
+    }
 
+    fun init(){
+        colorPickerIcon.setBackgroundColor(Color.WHITE)
         MaterialFactory.makeOpaqueWithColor(this, WHITE)
                 .thenAccept { material1 -> material = material1.makeCopy() }
                 .exceptionally { throwable ->
@@ -52,26 +84,15 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
                     throw CompletionException(throwable)
                 }
 
+        btn_deco_capture.setOnClickListener {
+
+        }
+
         clearButton.setOnClickListener {
             for (stroke in strokes) {
                 stroke.clear()
             }
             strokes.clear()
-        }
-
-        btn_deco_change.setOnClickListener {
-            modelRender = !modelRender
-//            modelRender = if(modelRender) {
-//                //모델 그리기 모드에서 버튼 클릭
-//                sceneFromFragment.arSceneView.scene.addOnUpdateListener(this)
-//                sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(this)
-//                false
-//            }else {
-//                //그림 그리기 모드에서 버튼 클릭
-//                sceneFromFragment.arSceneView.scene.addOnUpdateListener(null)
-//                sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(null)
-//                true
-//            }
         }
 
         undoButton.setOnClickListener {
@@ -82,54 +103,56 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
             strokes[lastIndex].clear()
             strokes.removeAt(lastIndex)
         }
-        sceneFromFragment = size_fragment as ArFragment
-        sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
-            if(!modelRender)
-                return@setOnTapArPlaneListener
-            val anchor = hitResult.createAnchor()
-            when (intent.getIntExtra("name", 0)) {
-                1 -> placeObject(sceneFromFragment, anchor, Uri.parse("bighornsheep.sfb"), "고양이")
-                //왕큼
-                2 -> placeObject(sceneFromFragment, anchor, Uri.parse("buffalo.sfb"), "고양이")
-                //큼
-                3 -> placeObject(sceneFromFragment, anchor, Uri.parse("camel.sfb"), "고양이")
-                //큼
-                4 -> placeObject(sceneFromFragment, anchor, Uri.parse("cow.sfb"), "고양이")
-                //왕큼
-                5 -> placeObject(sceneFromFragment, anchor, Uri.parse("dog.sfb"), "고양이")
-                //큼
-                6 -> placeObject(sceneFromFragment, anchor, Uri.parse("elephant.sfb"), "고양이")
-                //큼
-                7 -> placeObject(sceneFromFragment, anchor, Uri.parse("ferret.sfb"), "고양이")
-                //큼
-                8 -> placeObject(sceneFromFragment, anchor, Uri.parse("fox.sfb"), "고양이")
-                //큼
-                9 -> placeObject(sceneFromFragment, anchor, Uri.parse("gazelle.sfb"), "고양이")
-                //큼
-                10 -> placeObject(sceneFromFragment, anchor, Uri.parse("goat.sfb"), "고양이")
-                //큼
-                11 -> placeObject(sceneFromFragment, anchor, Uri.parse("horse.sfb"), "고양이")
-                //
-                12 -> placeObject(sceneFromFragment, anchor, Uri.parse("lion.sfb"), "고양이")
-                13 -> placeObject(sceneFromFragment, anchor, Uri.parse("mouse.sfb"), "고양이")
-                14 -> placeObject(sceneFromFragment, anchor, Uri.parse("panda.sfb"), "고양이")
-                15 -> placeObject(sceneFromFragment, anchor, Uri.parse("pig.sfb"), "고양이")
-                16 -> placeObject(sceneFromFragment, anchor, Uri.parse("raccoon.sfb"), "고양이")
-                17 -> placeObject(sceneFromFragment, anchor, Uri.parse("riverotter.sfb"), "고양이")
-                18 -> placeObject(sceneFromFragment, anchor, Uri.parse("sheep.sfb"), "고양이")
-                19 -> placeObject(sceneFromFragment, anchor, Uri.parse("snake.sfb"), "고양이")
 
+        btn_deco_model.setOnClickListener {
+            modelRender = true
+            colorSelect = 0
+            colorPickerIcon.setBackgroundColor(Color.TRANSPARENT)
+            btn_deco_model.setBackgroundColor(Color.WHITE)
+            if(modelSelect == 0){
+                //선택 팔레트 띄우지X
+                modelSelect = 1
+            }else{
+                //선택 팔레트 띄우기
+                list_deco_model.visibility = View.VISIBLE
+                modelSelect = 0
             }
         }
 
-        sceneFromFragment.arSceneView.planeRenderer.isEnabled = false
-        sceneFromFragment.arSceneView.scene.addOnUpdateListener(this)
-        sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(this)
-        setUpColorPickerUi()
-        //setRule()
+        requestManager = Glide.with(this)
+        datas = ArrayList()
+
+        datas.add(R.drawable.bighornsheep)
+        datas.add(R.drawable.buffalo)
+        datas.add(R.drawable.camel)
+        datas.add(R.drawable.cat)
+        datas.add(R.drawable.cow)
+        datas.add(R.drawable.dog)
+        datas.add(R.drawable.elephant)
+        datas.add(R.drawable.feret)
+        datas.add(R.drawable.fox)
+        datas.add(R.drawable.gazelle)
+        datas.add(R.drawable.goat)
+        datas.add(R.drawable.horse)
+        datas.add(R.drawable.lion)
+        datas.add(R.drawable.mouse)
+        datas.add(R.drawable.riverotter)
+        datas.add(R.drawable.panda)
+        datas.add(R.drawable.penguin)
+        datas.add(R.drawable.pig)
+        datas.add(R.drawable.raccoon)
+        datas.add(R.drawable.sheep)
+        datas.add(R.drawable.snake)
+
+        decoAdapter = DecoAdapter(datas, requestManager)
+        decoAdapter.setOnItemClickListener(this)
+        list_deco_model.layoutManager = GridLayoutManager(this, 3)
+        list_deco_model.adapter = decoAdapter
     }
 
     private fun placeObject(fragment: ArFragment, anchor: Anchor, model: Uri, name: String) {
+        if(!modelRender)
+            return
         ModelRenderable.builder().setSource(fragment.context, model)
                 .build()
                 .thenAccept { renderable -> addNodeToScene(fragment, anchor, renderable, name) }
@@ -140,6 +163,8 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
     }
 
     private fun addNodeToScene(fragment: ArFragment, anchor: Anchor, renderable: Renderable, name: String) {
+        if(!modelRender)
+            return
         val anchorNode = AnchorNode(anchor)
         val node = TransformableNode(fragment.transformationSystem)
         node.renderable = renderable
@@ -150,10 +175,23 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
 
     private fun setUpColorPickerUi() {
         colorPanel.visibility = View.GONE
+
         colorPickerIcon.setOnClickListener {
-            if (controlsPanel.visibility == View.VISIBLE) {
-                controlsPanel.visibility = View.GONE
-                colorPanel.visibility = View.VISIBLE
+            btn_deco_model.setBackgroundColor(Color.TRANSPARENT)
+            colorPickerIcon.setBackgroundColor(Color.WHITE)
+            modelRender = false
+            modelSelect = 0
+            if(colorSelect == 0){
+                //모델 누르다가 옴
+
+                colorSelect = 1
+            }else{
+                //컬러 선택이 이미 한 번 됨
+                if (controlsPanel.visibility == View.VISIBLE) {
+                    controlsPanel.visibility = View.GONE
+                    colorPanel.visibility = View.VISIBLE
+                }
+                colorSelect = 0
             }
         }
 
@@ -225,6 +263,7 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
 
 
     override fun onUpdate(frameTime: FrameTime?) {
+        Log.v("모델", modelRender.toString())
         if(modelRender)
             return
         val camera = sceneFromFragment.arSceneView.arFrame!!.camera
@@ -234,6 +273,7 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
     }
 
     override fun onPeekTouch(hitTestResult: HitTestResult?, tap: MotionEvent?) {
+        Log.v("모델", modelRender.toString())
         if(modelRender)
             return
         val action = tap!!.action
@@ -257,5 +297,13 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
         } else if (action == MotionEvent.ACTION_MOVE && currentStroke != null) {
             currentStroke!!.add(drawPoint)
         }
+    }
+
+    override fun onClick(v: View?) {
+        val idx: Int = list_deco_model!!.getChildAdapterPosition(v)
+        btn_deco_model.setImageResource(datas[idx])
+        modelUri = AnimalList.animalListE[idx] + ".sfb"
+        modelName = AnimalList.getMatch()[AnimalList.animalList[idx]]!!
+        list_deco_model.visibility = View.GONE
     }
 }
