@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val window = this.window
-        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        //window.statusBarColor = this.resources.getColor(R.color.background_tab_pressed)
-        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         super.onCreate(savedInstanceState)
@@ -37,25 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         CommonData.dictList = ArrayList()
         CommonData.dictList = SharedPreferenceController.getDictList(this)
-//        val mainIntent = Intent(this,
-//                KotlinActivity::class.java)
-//        mainIntent.putExtra("text", "text")
-//        startActivity(mainIntent)
-
-
-
-        //intent.extras["text"].toString()
-
-//        button.setOnClickListener {
-//            client.startRecording(true)
-//        }
 
         btn_main_play.setOnClickListener {
-            startActivity(Intent(this, PlaySelectActivity::class.java))
+            startActivity(Intent(this, SizeCheckActivity::class.java))
         }
 
         btn_main_deco.setOnClickListener {
-            startActivity(Intent(this, SizeCheckActivity::class.java))
+            startActivity(Intent(this, PlaySelectActivity::class.java))
         }
 
         btn_main_dict.setOnClickListener {

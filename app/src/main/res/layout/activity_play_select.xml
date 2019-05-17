@@ -5,20 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".play.PlaySelectActivity">
+    android:background="@drawable/background_img"
+    tools:context=".play.PlaySelectActivity"
+    android:layout_marginBottom="48dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-    <Button
+        <RelativeLayout
+            android:id="@+id/btn_study_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            >
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_btn"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_toRightOf="@+id/btn_study_back"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:src="@drawable/logotype"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
         android:id="@+id/btn_select_catch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="catch"/>
-    <Button
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/mean_card"/>
+    <ImageView
         android:id="@+id/btn_select_find"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="find"/>
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/animal_card"/>
 
 </LinearLayout>

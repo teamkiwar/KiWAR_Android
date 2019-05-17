@@ -22,8 +22,6 @@ import com.yg.mykiwar.util.CommonData
 import com.yg.mykiwar.util.CustomDialog
 import com.yg.mykiwar.util.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_catch.*
-import java.io.ByteArrayOutputStream
-import java.io.ObjectOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,16 +46,16 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
         val sceneFromFragment = catch_sceneform_fragment as ArFragment
         //val image = sceneFromFragment.arSceneView.arFrame!!.acquireCameraImage()
 
+
         sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
 //            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
 //                return@setOnTapArPlaneListener
 //            }
             val anchor = hitResult.createAnchor()
             CommonData.anchor = anchor
-//            insertAnchorInfo(anchor)
-            val baos = ByteArrayOutputStream()
-            val oos = ObjectOutputStream(baos)
-            oos.writeObject(anchor)
+
+            //흰색 땡땡이를 찾으면 게임이 시작돼요! 라는 문구 넣기.
+
 
             for (i in 0..10) {
                 val name = AnimalList.animalList[Random().nextInt(21)]
@@ -101,10 +99,7 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
             this.anchorNode = anchorNode
             selectedNode = node
             node.select()
-            //img_catch_clicked.setImageResource()
-//            val intent = Intent(this, CatchAnswerActivity::class.java)
-//            intent.putExtra("name", name)
-//            startActivityForResult(intent, request)
+
         }
     }
 
@@ -154,19 +149,5 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
         frame_catch_list.visibility = View.GONE
     }
 
-
-
-//    fun getMemberList(id : String) : RealmResults<AnchorInfo> {
-//        return realm.where(AnchorInfo::class.java).equalTo("id", id).findAll()
-//    }
-//
-//    fun insertAnchorInfo(anchor : Anchor){
-//        anchorInfo = AnchorInfo()
-//        anchorInfo.id = "anchor"
-//        anchorInfo.anchor = anchor
-//        realm.beginTransaction()
-//        realm.copyToRealm(anchorInfo)
-//        realm.commitTransaction()
-//    }
 
 }
