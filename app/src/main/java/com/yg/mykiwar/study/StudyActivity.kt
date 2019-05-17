@@ -1,83 +1,40 @@
 package com.yg.mykiwar.study
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.kakao.sdk.newtoneapi.SpeechRecognizeListener
-import com.kakao.sdk.newtoneapi.SpeechRecognizerClient
-import com.kakao.sdk.newtoneapi.SpeechRecognizerManager
+import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import com.yg.mykiwar.R
-
 import kotlinx.android.synthetic.main.activity_study.*
 
-class StudyActivity : AppCompatActivity() {
+class StudyActivity : AppCompatActivity(), View.OnClickListener {
 
-    var text : String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
+        val window = this.window
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_study)
+        btn_study_animal.setOnClickListener(this)
+        btn_study_dinosaur.setOnClickListener(this)
+        btn_study_insects.setOnClickListener(this)
+        btn_study_plants.setOnClickListener(this)
+        btn_study_back.setOnClickListener(this)
+    }
 
-        SpeechRecognizerManager.getInstance().initializeLibrary(this)
-
-        val builder = SpeechRecognizerClient.Builder().
-                setServiceType(SpeechRecognizerClient.SERVICE_TYPE_WEB)  // optional
-
-        val client = builder.build()
-
-        btn_study_pronoun.setOnClickListener {
-            client.startRecording(true)
+    override fun onClick(v: View?) {
+        when(v!!){
+            btn_study_animal->{
+                startActivity(Intent(this, StudyCardActivity::class.java))
+            }
+            btn_study_back->{
+                finish()
+            }
+            else->{
+                Toast.makeText(this, "준비중입니다.", Toast.LENGTH_SHORT).show()
+            }
         }
-
-        client.setSpeechRecognizeListener(object : SpeechRecognizeListener {
-            override fun onFinished() {
-                //Log.v("음성", "인식 끝")
-            }
-
-            override fun onPartialResult(partialResult: String?) {
-                Log.v("음성", partialResult)
-                //partialResult를 갖고 비교
-                //계속 도는 부분2
-                text = partialResult
-                tv_study_result.text = text
-            }
-
-            override fun onBeginningOfSpeech() {
-                //Log.v("음성", "말 시작")
-            }
-
-            override fun onAudioLevel(audioLevel: Float) {
-                //Log.v("음성", "오디오 레벨 " +  audioLevel.toString())
-                //계속 도는 부분1
-            }
-
-            override fun onEndOfSpeech() {
-                //Log.v("음성", "말 끝")
-            }
-
-            override fun onError(errorCode: Int, errorMsg: String?) {
-                //Log.v("음성", "에러에러")
-                //Log.v("음성", errorMsg)
-
-
-            }
-
-            override fun onResults(results: Bundle?) {
-            }
-
-            override fun onReady() {
-                //Log.v("음성", "대기")
-
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-            // ...
-        })
-
     }
-
-    public override fun onDestroy() {
-        super.onDestroy()
-
-        SpeechRecognizerManager.getInstance().finalizeLibrary()
-    }
-
 }

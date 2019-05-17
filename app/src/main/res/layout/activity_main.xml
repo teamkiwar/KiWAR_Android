@@ -5,39 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_img">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:focusable="true"
-        android:background="#6633B5E5"
         android:focusableInTouchMode="true">
 
-        <TextView
+        <ImageView
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:includeFontPadding="false"
-            android:textSize="20dp"
-            android:text="무엇을 할 건가요?"/>
+            android:src="@drawable/logotype"
+            />
+
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_main_study"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="학습"
+        android:background="@drawable/study"
         android:layout_weight="1"
+
         />
 
     <Button
         android:id="@+id/btn_main_deco"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="꾸미기"
+        android:background="@drawable/enjoy"
         android:layout_weight="1"
         />
 
@@ -45,7 +44,7 @@
         android:id="@+id/btn_main_play"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="게임"
+        android:background="@drawable/decorate"
         android:layout_weight="1"
         />
 
@@ -53,7 +52,7 @@
         android:id="@+id/btn_main_dict"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="도감"
+        android:background="@drawable/book"
         android:layout_weight="1"
         />
 

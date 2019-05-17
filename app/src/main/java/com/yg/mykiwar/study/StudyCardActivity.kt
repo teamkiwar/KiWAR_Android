@@ -3,9 +3,14 @@ package com.yg.mykiwar.study
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import android.view.WindowManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.yg.mykiwar.R
-import com.yg.mykiwar.study.card.StudyCardAdapter
+import com.yg.mykiwar.study.align.StudyAlignAdapter
+import com.yg.mykiwar.study.align.StudyAlignDatas
 import com.yg.mykiwar.util.AnimalList
 import kotlinx.android.synthetic.main.activity_study_card.*
 
@@ -14,48 +19,50 @@ class StudyCardActivity : AppCompatActivity() {
 
     var paramUri: Uri? = null
     var images : ArrayList<String> = ArrayList()
-    var datas : ArrayList<Int> = ArrayList()
+    var datas : ArrayList<StudyAlignDatas> = ArrayList()
+    lateinit var studyAlignAdapter: StudyAlignAdapter
+    lateinit var requestManager : RequestManager
 
     var otherUri : Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = this.resources.getColor(R.color.background_tab_pressed)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_study_card)
 
-//        CurrentActivity.activity = this
-//        paramUri = Uri.parse("assets://${packageName}/models/andy.obj")
-//        otherUri = Uri.parse("assets://${packageName}/models/Mesh_Cat.obj")
-        //initPresenter()
-
-        datas.add(R.drawable.bighornsheep)
-        datas.add(R.drawable.buffalo)
-        datas.add(R.drawable.camel)
-        datas.add(R.drawable.cat)
-        datas.add(R.drawable.cow)
-        datas.add(R.drawable.dog)
-        datas.add(R.drawable.elephant)
-        datas.add(R.drawable.feret)
-        datas.add(R.drawable.fox)
-        datas.add(R.drawable.gazelle)
-        datas.add(R.drawable.goat)
-        datas.add(R.drawable.horse)
-        datas.add(R.drawable.lion)
-        datas.add(R.drawable.mouse)
-        datas.add(R.drawable.riverotter)
-        datas.add(R.drawable.panda)
-        datas.add(R.drawable.penguin)
-        datas.add(R.drawable.pig)
-        datas.add(R.drawable.raccoon)
-        datas.add(R.drawable.sheep)
-        datas.add(R.drawable.snake)
+        btn_study_card_back.setOnClickListener {
+            finish()
+        }
+        datas.add(StudyAlignDatas(R.drawable.bighornsheep, "큰뿔양"))
+        datas.add(StudyAlignDatas(R.drawable.buffalo, "버팔로"))
+        datas.add(StudyAlignDatas(R.drawable.camel, "낙타"))
+        datas.add(StudyAlignDatas(R.drawable.cat, "고양이"))
+        datas.add(StudyAlignDatas(R.drawable.cow, "소"))
+        datas.add(StudyAlignDatas(R.drawable.dog, "개"))
+        datas.add(StudyAlignDatas(R.drawable.elephant, "코끼리"))
+        datas.add(StudyAlignDatas(R.drawable.feret, "퍼렛"))
+        datas.add(StudyAlignDatas(R.drawable.fox, "여우"))
+        datas.add(StudyAlignDatas(R.drawable.gazelle, "가젤"))
+        datas.add(StudyAlignDatas(R.drawable.goat, "염소"))
+        datas.add(StudyAlignDatas(R.drawable.horse, "말"))
+        datas.add(StudyAlignDatas(R.drawable.lion, "사자"))
+        datas.add(StudyAlignDatas(R.drawable.mouse, "쥐"))
+        datas.add(StudyAlignDatas(R.drawable.riverotter, "수달"))
+        datas.add(StudyAlignDatas(R.drawable.panda, "팬더"))
+        datas.add(StudyAlignDatas(R.drawable.penguin, "펭귄"))
+        datas.add(StudyAlignDatas(R.drawable.pig, "돼지"))
+        datas.add(StudyAlignDatas(R.drawable.raccoon, "라쿤"))
+        datas.add(StudyAlignDatas(R.drawable.sheep, "양"))
+        datas.add(StudyAlignDatas(R.drawable.snake, "뱀"))
 
         for(animal in AnimalList.animalList)
             images.add(animal)
 
-        vp_study_card.adapter = StudyCardAdapter(supportFragmentManager, paramUri, images.size, images, datas)
-        //vp_study_card.offscreenPageLimit = 3
+        requestManager = Glide.with(this)
+        studyAlignAdapter = StudyAlignAdapter(datas, this, requestManager)
+        list_card_animal.layoutManager = GridLayoutManager(this, 2)
+        list_card_animal.adapter = studyAlignAdapter
     }
 
 

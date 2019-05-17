@@ -5,32 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".study.StudyCardActivity"
+    android:background="@drawable/background_img"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:focusable="true"
-        android:background="#6633B5E5"
         android:focusableInTouchMode="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:includeFontPadding="false"
-            android:textSize="20dp"
-            android:text="동물 친구들"/>
+        <RelativeLayout
+            android:id="@+id/btn_study_card_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            >
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_btn"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_study_card"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_card_animal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

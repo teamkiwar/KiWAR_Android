@@ -35,7 +35,7 @@
             android:text="AR스캔"/>
 
         <Button
-            android:id="@+id/btn_study_pronoun"
+            android:id="@+id/btn_study_pronounc"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

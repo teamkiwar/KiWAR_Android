@@ -9,4 +9,5 @@
     <string name="blue_color">Blue color</string>
     <string name="black_color">Black color</string>
     <string name="rainbow_color">Rainbow color</string>
+    <string name="kakao_app_key">a20ca6f9bd58eda6bd65d42611cb5151</string>
 </resources>

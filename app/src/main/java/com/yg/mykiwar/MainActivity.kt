@@ -3,11 +3,14 @@ package com.yg.mykiwar
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.WindowManager
 import com.yg.mykiwar.deco.SizeCheckActivity
 import com.yg.mykiwar.dict.DictActivity
 import com.yg.mykiwar.play.PlaySelectActivity
 import com.yg.mykiwar.study.StudyCardActivity
+import com.yg.mykiwar.util.CommonData
+import com.yg.mykiwar.util.SharedPreferenceController
 import com.yg.mykiwar.util.helper.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,9 +18,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = this.resources.getColor(R.color.background_tab_pressed)
-
+        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //window.statusBarColor = this.resources.getColor(R.color.background_tab_pressed)
+        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -29,6 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         if(!PermissionHelper.hasWriteExternalStoragePermission(this))
             PermissionHelper.requestWriteExternalStoragePermission(this)
+
+        CommonData.dictList = ArrayList()
+        CommonData.dictList = SharedPreferenceController.getDictList(this)
 //        val mainIntent = Intent(this,
 //                KotlinActivity::class.java)
 //        mainIntent.putExtra("text", "text")

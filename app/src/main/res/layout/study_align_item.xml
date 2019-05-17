@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/study_align_item"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    tools:context=".study.StudyAlignActivity">
+    android:layout_height="200dp"
+    android:background="@drawable/card_round"
+    android:layout_margin="8dp"
+    tools:context=".study.StudyCardActivity"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imge_study_align"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="155dp"
+        android:background="@drawable/card_round2"
+        android:scaleType="fitXY"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/name_study_align"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/nanum_square_round"
+        />
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

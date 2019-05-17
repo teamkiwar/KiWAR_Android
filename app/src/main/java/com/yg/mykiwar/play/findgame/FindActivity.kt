@@ -17,6 +17,8 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
 import com.yg.mykiwar.util.AnimalList
+import com.yg.mykiwar.util.CommonData
+import com.yg.mykiwar.util.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_find.*
 import java.util.*
 
@@ -107,6 +109,10 @@ class FindActivity : AppCompatActivity() {
             if (name == answer) {
                 anchorNode.removeChild(node)
                 Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
+                CommonData.dictList.add(AnimalList.getMatch()[name]!!)
+                //도감용 저장은 영어이름으로 할 것.
+                SharedPreferenceController.setDictList(this, CommonData.dictList)
+                //이거도 저장은 영어.
             } else
                 Toast.makeText(this, "다시 생각해보세요.", Toast.LENGTH_SHORT).show()
             node.select()
