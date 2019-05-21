@@ -30,7 +30,7 @@ class DictActivity : AppCompatActivity() {
                 Log.v("이름", dicList[i])
                 val nameUrl = Uri.parse(dicList[i]+".sfb")
                 val lineCount = dicList.size / 5 + 1
-                val lineNumber = i / 5 + 1
+                val lineNumber = i%5
                 val colNumber = i / 5
                 placeObject(arFragment,
                         anchor, nameUrl, "", lineNumber, colNumber)
@@ -56,9 +56,9 @@ class DictActivity : AppCompatActivity() {
         node.renderable = renderable
         node.setParent(anchorNode)
         //Vector3(0f, 0f, 0f)
-        val x = (colNumber - 2).toFloat()
-        val y = lineNumber.toFloat() / 10f
-        val z = -1f
+        val x = (lineNumber - 2).toFloat() / 2f
+        val y = colNumber.toFloat() / 2f
+        val z = -0.5f
         node.localPosition = Vector3(x, y, z)
         arFragment.arSceneView.scene.addChild(anchorNode)
     }

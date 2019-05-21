@@ -7,10 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.Looper
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.PixelCopy
+import android.view.View
 import android.widget.Toast
 import com.google.ar.core.*
 import com.google.ar.sceneform.AnchorNode
@@ -61,6 +61,8 @@ class StudyScanActivity : AppCompatActivity() {
         }
 
         btn_scan_record.setOnClickListener {
+            image_scan_state.visibility = View.VISIBLE
+            image_scan_state.setImageResource(R.drawable.tory_listen)
             pronoun()
         }
     }
@@ -78,15 +80,24 @@ class StudyScanActivity : AppCompatActivity() {
             override fun onFinished() {
                 //Log.v("음성", "인식 끝")
                 if(check == name){
-                    Looper.prepare()
-                    Toast.makeText(this@StudyScanActivity, "참 잘했어요!", Toast.LENGTH_SHORT).show()
+                    //Looper.prepare()
+                    //Toast.makeText(this@StudyScanActivity, "참 잘했어요!", Toast.LENGTH_SHORT).show()
                     Log.v("제대로 인식된 것", name)
-                    Looper.loop()
+                    image_scan_state.setImageResource(R.drawable.tory_good_job)
+                    Thread.sleep(2000)
+                    runOnUiThread {
+                        image_scan_state.visibility = View.GONE
+                    }
+                    //Looper.loop()
                 }else{
-                    Looper.prepare()
-                    Toast.makeText(this@StudyScanActivity, "다시 해보세요", Toast.LENGTH_SHORT).show()
+                    //Looper.prepare()
+                    //Toast.makeText(this@StudyScanActivity, "다시 해보세요", Toast.LENGTH_SHORT).show()
                     Log.v("잘 인식 안 된 것", check)
-                    Looper.loop()
+                    image_scan_state.setImageResource(R.drawable.tory_re)
+                    Thread.sleep(2000)
+                    runOnUiThread {
+                        image_scan_state.visibility = View.GONE
+                    }                 //Looper.loop()
                 }
             }
 
@@ -99,6 +110,7 @@ class StudyScanActivity : AppCompatActivity() {
 
             override fun onBeginningOfSpeech() {
                 //Log.v("음성", "말 시작")
+
             }
 
             override fun onAudioLevel(audioLevel: Float) {
