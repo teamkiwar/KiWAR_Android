@@ -1,6 +1,5 @@
 package com.yg.mykiwar.study
 
-import android.util.Log
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.ux.ArFragment
@@ -21,13 +20,13 @@ class StudyScanFragment : ArFragment() {
 //
 //        test = false
 
-        if(studyScanActivity.setUpAugmentedImageDb(config, session)){
-            //
-            Log.v("StudyScan", "들옴")
-        }else{
-            //
-            Log.v("StudyScan", "안 들옴")
-        }
+//        if(studyScanActivity.setUpAugmentedImageDb(config, session)){
+//            //
+//            Log.v("StudyScan", "들옴")
+//        }else{
+//            //
+//            Log.v("StudyScan", "안 들옴")
+//        }
         return config
     }
 

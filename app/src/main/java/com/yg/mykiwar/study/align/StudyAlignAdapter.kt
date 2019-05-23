@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.RequestManager
 import com.yg.mykiwar.R
-import com.yg.mykiwar.study.StudyScanActivity
+import com.yg.mykiwar.study.StudyRecordActivity
 
 
 
@@ -23,7 +23,7 @@ class StudyAlignAdapter(var datas : ArrayList<StudyAlignDatas>, var context : Co
     override fun getItemCount(): Int = datas.size
     override fun onBindViewHolder(holder: StudyAlignViewHolder, position: Int) {
         holder.alignItem.setOnClickListener {
-            val intent = Intent(context, StudyScanActivity::class.java)
+            val intent = Intent(context, StudyRecordActivity::class.java)
             intent.putExtra("name", datas[position].name)
             context.startActivity(intent)
         }

@@ -1,5 +1,6 @@
 package com.yg.mykiwar.study
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -34,6 +35,11 @@ class StudyCardActivity : AppCompatActivity() {
         btn_study_card_back.setOnClickListener {
             finish()
         }
+
+        btn_study_card_toscan.setOnClickListener {
+            startActivity(Intent(this, StudyScanActivity::class.java))
+        }
+
         datas.add(StudyAlignDatas(R.drawable.bighornsheep, "큰뿔양"))
         datas.add(StudyAlignDatas(R.drawable.buffalo, "버팔로"))
         datas.add(StudyAlignDatas(R.drawable.camel, "낙타"))

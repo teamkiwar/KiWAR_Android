@@ -20,12 +20,30 @@
             android:layout_height="52dp"
             >
             <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/back_btn"
+            android:layout_centerInParent="true"
+            />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_study_card_toscan"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentRight="true"
+            >
+            <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/back_btn"
+                android:src="@drawable/capture"
                 android:layout_centerInParent="true"
+
                 />
         </RelativeLayout>
+
+
 
     </RelativeLayout>
 

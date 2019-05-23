@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".study.StudyScanActivity">
-
+    tools:context=".study.StudyRecordActivity">
     <fragment
-        android:id="@+id/sceneform_scan_fragment"
+        android:id="@+id/sceneform_record_fragment"
         android:name="com.yg.mykiwar.study.StudyScanFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +15,7 @@
     <ImageView
         android:visibility="gone"
         android:layout_centerInParent="true"
-        android:id="@+id/image_scan_state"
+        android:id="@+id/image_record_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/tory_re"
@@ -28,16 +27,14 @@
         android:layout_centerHorizontal="true"
         android:layout_height="80dp"
         android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/btn_scan_check"
+        <ImageView
+            android:id="@+id/btn_record_pronoun"
             android:background="#ffffff"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/capture"/>
+            android:src="@drawable/microphone_black_shape"/>
 
     </LinearLayout>
-
-
 
 </RelativeLayout>
