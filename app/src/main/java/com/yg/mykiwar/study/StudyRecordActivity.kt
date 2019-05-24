@@ -58,6 +58,7 @@ class StudyRecordActivity : AppCompatActivity() {
         if(!isModelLoaded)
             placeObject(arFragment, anchorNode,
                 Uri.parse(AnimalList.getMatch()[name] + ".sfb"))
+        isModelLoaded = true
     }
 
 
@@ -78,7 +79,6 @@ class StudyRecordActivity : AppCompatActivity() {
         node.setParent(anchor)
         fragment.arSceneView.scene.addChild(anchor)
         node.select()
-        isModelLoaded = true
     }
 
     private fun pronoun(){

@@ -27,6 +27,8 @@ import java.util.*
 class FindActivity : AppCompatActivity() {
 
     lateinit var answer : String
+    private lateinit var answerList: ArrayList<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find)

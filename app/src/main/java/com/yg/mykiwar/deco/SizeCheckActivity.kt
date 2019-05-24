@@ -1,13 +1,20 @@
 package com.yg.mykiwar.deco
 
+import android.content.ContentValues
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.HandlerThread
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.PixelCopy
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -26,6 +33,8 @@ import com.yg.mykiwar.deco.adapter.DecoAdapter
 import com.yg.mykiwar.util.AnimalList
 import kotlinx.android.synthetic.main.activity_size_check.*
 import kotlinx.android.synthetic.main.deco_fragment.*
+import java.io.File
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.CompletionException
 
@@ -85,7 +94,7 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
                 }
 
         btn_deco_capture.setOnClickListener {
-
+            capture()
         }
 
         clearButton.setOnClickListener {
@@ -148,6 +157,50 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
         decoAdapter.setOnItemClickListener(this)
         list_deco_model.layoutManager = GridLayoutManager(this, 3)
         list_deco_model.adapter = decoAdapter
+    }
+
+    private fun capture(){
+
+        val view = sceneFromFragment.arSceneView
+        val takeBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val handlerThread = HandlerThread("PixelCopier")
+        handlerThread.start()
+
+        PixelCopy.request(view, takeBitmap, { copyResult ->
+            if (copyResult == PixelCopy.SUCCESS) {
+                try {
+                        val values = ContentValues()
+                        values.put(MediaStore.Images.Media.TITLE, "kiwar_" + System.currentTimeMillis().toString())
+                        values.put(MediaStore.Images.Media.DISPLAY_NAME, "title")
+                        values.put(MediaStore.Images.Media.DESCRIPTION, "description")
+                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                        // Add the date meta data to ensure the image is added at the front of the gallery
+                        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis())
+                        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+
+
+                    val file = File(Environment.getExternalStorageDirectory().toString() + "/DCIM/Screenshots/test.png")
+                    try{
+                        val cr = contentResolver
+                        val url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                        val imageOut = cr.openOutputStream(url)
+
+                        takeBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOut)
+                        imageOut.close()
+                    }
+                    catch(e : Exception){
+                        e.printStackTrace()
+                    }
+                } catch (e: IOException) {
+                    return@request
+                }
+            } else {
+            }
+            Log.v("메소드 캡쳐", "3")
+
+            handlerThread.quitSafely()
+        }, Handler(handlerThread.looper))
+
     }
 
     private fun placeObject(fragment: ArFragment, anchor: Anchor, model: Uri, name: String) {

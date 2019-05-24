@@ -12,7 +12,7 @@ class StudyScanFragment : ArFragment() {
         config.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
         session!!.configure(config)
         this.arSceneView.setupSession(session)
-        val studyScanActivity = activity as StudyScanActivity
+//        val studyScanActivity = activity as StudyScanActivity
 
 //        if(test){
 //            val image = this.arSceneView.arFrame!!.acquireCameraImage()
