@@ -8,7 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.ar.core.Anchor
+import com.google.ar.core.Pose
+import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
@@ -16,6 +19,7 @@ import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
+import com.yg.mykiwar.play.PlayFragment
 import com.yg.mykiwar.play.catchgame.adapter.PlayCatchAdapter
 import com.yg.mykiwar.util.AnimalList
 import com.yg.mykiwar.util.CommonData
@@ -32,6 +36,10 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var answer: String
     private lateinit var anchorNode: AnchorNode
     private lateinit var selectedNode: Node
+    private lateinit var sceneFromFragment : PlayFragment
+    private var isLoaded : Boolean = false
+    private var answerCount = 0
+
     var setting = false
     val request = 1001
 
@@ -43,30 +51,54 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_catch)
-        val sceneFromFragment = catch_sceneform_fragment as ArFragment
+        sceneFromFragment = catch_sceneform_fragment as PlayFragment
         //val image = sceneFromFragment.arSceneView.arFrame!!.acquireCameraImage()
 
-
-        sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
-//            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
-//                return@setOnTapArPlaneListener
+        sceneFromFragment.planeDiscoveryController.hide()
+        sceneFromFragment.arSceneView.scene.addOnUpdateListener(this::init)
+        tv_catch_answer_count.text = answerCount.toString() + " / 10"
+//        sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
+////            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
+////                return@setOnTapArPlaneListener
+////            }
+//            CommonData.anchor = anchor
+//
+//            //흰색 땡땡이를 찾으면 게임이 시작돼요! 라는 문구 넣기.
+//            val cameraPos = sceneFromFragment.arSceneView.scene.camera.worldPosition
+//            val cameraForward = sceneFromFragment.arSceneView.scene.camera.forward
+//            val position = Vector3.add(cameraPos, cameraForward.scaled(1.0f))
+//            val pose = Pose.makeTranslation(position.x, position.y, position.z)
+//            val anchor = sceneFromFragment.arSceneView.session!!.createAnchor(pose)
+//            for (i in 0..10) {
+//                val name = AnimalList.animalList[Random().nextInt(21)]
+//                val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
+//                placeObject(sceneFromFragment, anchor, nameUrl, name)
 //            }
-            val anchor = hitResult.createAnchor()
-            CommonData.anchor = anchor
+//            sceneFromFragment.setOnTapArPlaneListener(null)
+//        }
 
-            //흰색 땡땡이를 찾으면 게임이 시작돼요! 라는 문구 넣기.
+        frame_catch_list.setOnClickListener {
+            frame_catch_list.visibility = View.GONE
+        }
+    }
 
-
+    private fun init(frameTime: FrameTime){
+        if (sceneFromFragment.arSceneView.arFrame!!.camera.trackingState != TrackingState.TRACKING) {
+            return
+        }
+        if(!isLoaded){
+            isLoaded = true
+            sceneFromFragment.arSceneView.scene.removeOnUpdateListener(this::init)
+            val cameraPos = sceneFromFragment.arSceneView.scene.camera.worldPosition
+            val cameraForward = sceneFromFragment.arSceneView.scene.camera.forward
+            val position = Vector3.add(cameraPos, cameraForward.scaled(1.0f))
+            val pose = Pose.makeTranslation(position.x, position.y, position.z)
+            val anchor = sceneFromFragment.arSceneView.session!!.createAnchor(pose)
             for (i in 0..10) {
                 val name = AnimalList.animalList[Random().nextInt(21)]
                 val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
                 placeObject(sceneFromFragment, anchor, nameUrl, name)
             }
-            sceneFromFragment.setOnTapArPlaneListener(null)
-        }
-
-        frame_catch_list.setOnClickListener {
-            frame_catch_list.visibility = View.GONE
         }
     }
 
@@ -144,6 +176,13 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
             //도감용 저장은 영어이름으로 할 것.
             SharedPreferenceController.setDictList(this, CommonData.dictList)
             //이거도 저장은 영어.
+            answerCount++
+            tv_catch_answer_count.text = answerCount.toString() + " / 10"
+            if(answerCount == 10){
+                Toast.makeText(this, "게임이 끝났습니다.", Toast.LENGTH_SHORT).show()
+                Thread.sleep(500)
+                finish()
+            }
         } else
             Toast.makeText(this, "다시 생각해보세요.", Toast.LENGTH_SHORT).show()
         frame_catch_list.visibility = View.GONE

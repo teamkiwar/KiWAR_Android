@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/find_sceneform_fragment"
-        android:name="com.google.ar.sceneform.ux.ArFragment"
+        android:name="com.yg.mykiwar.play.PlayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"

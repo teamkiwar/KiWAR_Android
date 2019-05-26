@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.ar.core.Anchor
-import com.google.ar.core.Plane
+import com.google.ar.core.Pose
+import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.rendering.Renderable
@@ -16,6 +18,7 @@ import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.yg.mykiwar.R
+import com.yg.mykiwar.play.PlayFragment
 import com.yg.mykiwar.util.AnimalList
 import com.yg.mykiwar.util.CommonData
 import com.yg.mykiwar.util.SharedPreferenceController
@@ -28,29 +31,56 @@ class FindActivity : AppCompatActivity() {
 
     lateinit var answer : String
     private lateinit var answerList: ArrayList<String>
+    private lateinit var sceneFromFragment : PlayFragment
+    private var isLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find)
+        sceneFromFragment = find_sceneform_fragment as PlayFragment
+        //val image = sceneFromFragment.arSceneView.arFrame!!.acquireCameraImage()
 
-        val sceneFromFragment = find_sceneform_fragment as ArFragment
+        sceneFromFragment.planeDiscoveryController.hide()
+        sceneFromFragment.arSceneView.scene.addOnUpdateListener(this::init)
+
         answer = AnimalList.animalList[Random().nextInt(AnimalList.animalList.size)]
 
+//        sceneFromFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
+//            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
+//                return@setOnTapArPlaneListener
+//            }
+//            val quizAnchor = hitResult.createAnchor()
+//            placeQuiz(sceneFromFragment, quizAnchor, answer)
+//
+//            val anchor = hitResult.createAnchor()
+//            for (i in 0..10) {
+//                val name = AnimalList.animalList[Random().nextInt(21)]
+//                val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
+//                placeObject(sceneFromFragment, anchor, nameUrl, name)
+//            }
+//            sceneFromFragment.setOnTapArPlaneListener(null)
+//        }
+    }
 
-        sceneFromFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
-            if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) {
-                return@setOnTapArPlaneListener
-            }
-            val quizAnchor = hitResult.createAnchor()
-            placeQuiz(sceneFromFragment, quizAnchor, answer)
+    private fun init(frameTime: FrameTime){
+        if (sceneFromFragment.arSceneView.arFrame!!.camera.trackingState != TrackingState.TRACKING) {
+            return
+        }
+        if(!isLoaded){
+            isLoaded = true
+            sceneFromFragment.arSceneView.scene.removeOnUpdateListener(this::init)
+            val cameraPos = sceneFromFragment.arSceneView.scene.camera.worldPosition
+            val cameraForward = sceneFromFragment.arSceneView.scene.camera.forward
+            val position = Vector3.add(cameraPos, cameraForward.scaled(1.0f))
+            val pose = Pose.makeTranslation(position.x, position.y, position.z)
+            val anchor = sceneFromFragment.arSceneView.session!!.createAnchor(pose)
+            placeQuiz(sceneFromFragment, anchor, answer)
 
-            val anchor = hitResult.createAnchor()
             for (i in 0..10) {
                 val name = AnimalList.animalList[Random().nextInt(21)]
                 val nameUrl = Uri.parse(AnimalList.getMatch()[name]+".sfb")
                 placeObject(sceneFromFragment, anchor, nameUrl, name)
             }
-            sceneFromFragment.setOnTapArPlaneListener(null)
         }
     }
 
