@@ -29,7 +29,6 @@ import java.io.IOException
 
 class StudyScanActivity : AppCompatActivity() {
 
-
     private lateinit var arFragment : StudyScanFragment
     private lateinit var name : String
     private lateinit var imageUrl : String
@@ -37,8 +36,6 @@ class StudyScanActivity : AppCompatActivity() {
     private var shouldModel = false
     private var scanLabel = ""
     private val TAG = "StudyScan"
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +48,6 @@ class StudyScanActivity : AppCompatActivity() {
             scan()
         }
     }
-
 
     private fun scan(){
         val view = arFragment.arSceneView
@@ -139,6 +135,9 @@ class StudyScanActivity : AppCompatActivity() {
         if(shouldModel){
             placeObject(arFragment, anchorNode,
                     Uri.parse(scanLabel + ".sfb"))
+            Toast.makeText(this, AnimalList.animalList[AnimalList.animalListE.indexOf(scanLabel)]
+                    + "입니다!",
+                    Toast.LENGTH_SHORT).show()
             shouldModel = false
         }
     }

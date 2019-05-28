@@ -81,7 +81,6 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
         sceneFromFragment.arSceneView.scene.addOnUpdateListener(this)
         sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(this)
         setUpColorPickerUi()
-        //setRule()
     }
 
     fun init(){

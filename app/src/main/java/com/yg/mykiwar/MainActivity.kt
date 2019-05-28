@@ -9,8 +9,6 @@ import com.yg.mykiwar.deco.SizeCheckActivity
 import com.yg.mykiwar.dict.DictActivity
 import com.yg.mykiwar.play.PlaySelectActivity
 import com.yg.mykiwar.study.StudyCardActivity
-import com.yg.mykiwar.util.CommonData
-import com.yg.mykiwar.util.SharedPreferenceController
 import com.yg.mykiwar.util.helper.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -32,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         if(!PermissionHelper.hasWriteExternalStoragePermission(this))
             PermissionHelper.requestWriteExternalStoragePermission(this)
 
-        CommonData.dictList = ArrayList()
-        CommonData.dictList = SharedPreferenceController.getDictList(this)
+
 
         btn_main_play.setOnClickListener {
             startActivity(Intent(this, SizeCheckActivity::class.java))
