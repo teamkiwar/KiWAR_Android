@@ -16,12 +16,37 @@
         app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
-        android:background="#ffffff"
+        android:background="#90000000"
+        android:textColor="#E65A5A"
         android:textSize="48sp"
         android:id="@+id/tv_find_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <RelativeLayout
+            android:id="@+id/btn_find_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            >
+            <ImageView
+                android:id="@+id/temp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_btn"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -19,6 +19,10 @@ class PlaySelectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_select)
 
+        btn_select_back.setOnClickListener {
+            finish()
+        }
+
         btn_select_find.setOnClickListener {
             startActivity(Intent(this, FindActivity::class.java))
         }

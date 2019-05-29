@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.google.ar.core.Anchor
+import com.google.ar.core.Pose
+import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
@@ -18,14 +21,34 @@ import kotlinx.android.synthetic.main.activity_dict.*
 
 class DictActivity : AppCompatActivity() {
     private lateinit var arFragment : ArFragment
-
+    private var isLoaded = false
+    lateinit var dicList : ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dict)
         arFragment = scene_dict_display as ArFragment
-        val dicList = SharedPreferenceController.getDictList(this)
-        arFragment.setOnTapArPlaneListener { hitResult, _, _ ->
-            val anchor = hitResult.createAnchor()
+        dicList = ArrayList()
+        dicList = SharedPreferenceController.getDictList(this)
+        arFragment.planeDiscoveryController.hide()
+        arFragment.arSceneView.scene.addOnUpdateListener(this::init)
+
+        btn_dict_back.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun init(frameTime: FrameTime){
+        if (arFragment.arSceneView.arFrame!!.camera.trackingState != TrackingState.TRACKING) {
+            return
+        }
+        if(!isLoaded){
+            isLoaded = true
+            arFragment.arSceneView.scene.removeOnUpdateListener(this::init)
+            val cameraPos = arFragment.arSceneView.scene.camera.worldPosition
+            val cameraForward = arFragment.arSceneView.scene.camera.forward
+            val position = Vector3.add(cameraPos, cameraForward.scaled(1.0f))
+            val pose = Pose.makeTranslation(position.x, position.y, position.z)
+            val anchor = arFragment.arSceneView.session!!.createAnchor(pose)
             for (i in 0 until dicList.size) {
                 Log.v("이름", dicList[i])
                 val nameUrl = Uri.parse(dicList[i]+".sfb")
@@ -37,6 +60,7 @@ class DictActivity : AppCompatActivity() {
             }
         }
     }
+
 
     fun placeObject(arFragment : ArFragment, anchor: Anchor, model: Uri, name: String, lineCount : Int, colNumber : Int) {
         ModelRenderable.builder().setSource(arFragment.context, model)

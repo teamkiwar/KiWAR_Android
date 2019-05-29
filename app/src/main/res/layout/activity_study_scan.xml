@@ -17,9 +17,9 @@
         android:visibility="gone"
         android:layout_centerInParent="true"
         android:id="@+id/image_scan_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tory_re"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
         />
 
     <LinearLayout
@@ -27,16 +27,42 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_height="80dp"
+        android:background="#80000000"
         android:orientation="horizontal">
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_scan_check"
-            android:background="#ffffff"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:tint="#E65A5A"
+            android:padding="8dp"
             android:src="@drawable/capture"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <RelativeLayout
+            android:id="@+id/btn_scan_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            >
+            <ImageView
+                android:id="@+id/temp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_btn"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 
 
 

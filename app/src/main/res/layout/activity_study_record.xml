@@ -25,16 +25,52 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="#80000000"
         android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_record_pronoun"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textAlignment="center"
+            android:textColor="#E65A5A"
+            android:text="큰뿔양"
+            android:textSize="24sp"
+            android:paddingTop="4dp"
+            android:fontFamily="@font/nanum_round"
+            />
         <ImageView
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:id="@+id/btn_record_pronoun"
-            android:background="#ffffff"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/microphone_black_shape"/>
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="#E65A5A"
+            android:src="@drawable/mic"/>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <RelativeLayout
+            android:id="@+id/btn_record_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            >
+            <ImageView
+                android:id="@+id/temp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/back_btn"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

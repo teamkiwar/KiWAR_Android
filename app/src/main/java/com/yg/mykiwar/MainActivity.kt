@@ -8,7 +8,7 @@ import android.view.WindowManager
 import com.yg.mykiwar.deco.SizeCheckActivity
 import com.yg.mykiwar.dict.DictActivity
 import com.yg.mykiwar.play.PlaySelectActivity
-import com.yg.mykiwar.study.StudyCardActivity
+import com.yg.mykiwar.study.StudyActivity
 import com.yg.mykiwar.util.helper.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_main_study.setOnClickListener {
-            startActivity(Intent(this, StudyCardActivity::class.java))
+            startActivity(Intent(this, StudyActivity::class.java))
         }
     }
 }

@@ -60,6 +60,9 @@ class FindActivity : AppCompatActivity() {
 //            }
 //            sceneFromFragment.setOnTapArPlaneListener(null)
 //        }
+        btn_find_back.setOnClickListener {
+            finish()
+        }
     }
 
     private fun init(frameTime: FrameTime){

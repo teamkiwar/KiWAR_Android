@@ -2,7 +2,6 @@ package com.yg.mykiwar.study.align
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,9 +27,9 @@ class StudyAlignAdapter(var datas : ArrayList<StudyAlignDatas>, var context : Co
             context.startActivity(intent)
         }
 //        holder.alignPreView.setBackgroundResource(datas[position].path)
-        val drawable = context.getDrawable(R.drawable.card_round2) as GradientDrawable
+        //val drawable = context.getDrawable(R.drawable.card_round2) as GradientDrawable
         requestManager.load(datas[position].path).into(holder.alignPreView)
-        holder.alignPreView.background = drawable
+        //holder.alignPreView.background = drawable
         holder.alignPreView.clipToOutline = true
         holder.alignName.text = datas[position].name
     }

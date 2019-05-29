@@ -10,6 +10,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:focusable="true"
@@ -31,14 +32,14 @@
         <ImageView
             android:layout_toRightOf="@+id/btn_study_back"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_width="80dp"
+            android:layout_height="24dp"
             android:src="@drawable/logotype"
             />
 
     </RelativeLayout>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/btn_study_animal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,7 +47,6 @@
         android:layout_marginLeft="16dp"
         android:background="@drawable/animal"
         android:layout_weight="1"
-
         />
 
     <ImageView

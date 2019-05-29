@@ -43,6 +43,10 @@ class StudyRecordActivity : AppCompatActivity() {
             image_record_state.setImageResource(R.drawable.tory_listen)
             pronoun()
         }
+        btn_record_back.setOnClickListener {
+            finish()
+        }
+        tv_record_pronoun.text = name
     }
     private fun onUpdateFrame(frameTime: FrameTime){
         if (arFragment.arSceneView.arFrame!!.camera.trackingState != TrackingState.TRACKING) {

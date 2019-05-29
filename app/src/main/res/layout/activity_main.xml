@@ -9,6 +9,8 @@
     android:background="@drawable/background_img">
 
     <RelativeLayout
+        android:layout_marginTop="16dp"
+
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:focusable="true"

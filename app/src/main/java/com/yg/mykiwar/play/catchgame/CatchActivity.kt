@@ -76,6 +76,9 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
 //            }
 //            sceneFromFragment.setOnTapArPlaneListener(null)
 //        }
+        btn_catch_back.setOnClickListener {
+            finish()
+        }
 
         frame_catch_list.setOnClickListener {
             frame_catch_list.visibility = View.GONE

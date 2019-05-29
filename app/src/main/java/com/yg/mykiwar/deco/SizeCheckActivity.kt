@@ -16,6 +16,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.PixelCopy
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -69,6 +70,7 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_size_check)
+
         init()
         sceneFromFragment = size_fragment as ArFragment
         sceneFromFragment.setOnTapArPlaneListener { hitResult, _, _ ->
@@ -77,10 +79,19 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
             val anchor = hitResult.createAnchor()
             placeObject(sceneFromFragment, anchor, Uri.parse(modelUri), modelName)
         }
-        sceneFromFragment.arSceneView.planeRenderer.isEnabled = false
+        //sceneFromFragment.arSceneView.planeRenderer.isEnabled = false
         sceneFromFragment.arSceneView.scene.addOnUpdateListener(this)
         sceneFromFragment.arSceneView.scene.addOnPeekTouchListener(this)
         setUpColorPickerUi()
+
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            view_deco_render.visibility = View.GONE
+        }, 3000)
+
+        btn_deco_back.setOnClickListener {
+            finish()
+        }
     }
 
     fun init(){
@@ -94,6 +105,14 @@ class SizeCheckActivity : AppCompatActivity(), Scene.OnUpdateListener, Scene.OnP
 
         btn_deco_capture.setOnClickListener {
             capture()
+            image_deco_capture.visibility = View.VISIBLE
+            val slowlyDisappear = AnimationUtils.loadAnimation(this,R.anim.fade_out)
+            image_deco_capture.animation = slowlyDisappear
+            val handler = Handler()
+            handler.postDelayed(Runnable {
+                image_deco_capture.visibility = View.GONE
+                Toast.makeText(applicationContext, "캡쳐 완료!", Toast.LENGTH_SHORT).show()
+            }, 500)
         }
 
         clearButton.setOnClickListener {

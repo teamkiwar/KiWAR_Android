@@ -10,17 +10,19 @@
     android:layout_marginBottom="48dp">
 
     <RelativeLayout
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
         <RelativeLayout
-            android:id="@+id/btn_study_back"
+            android:id="@+id/btn_select_back"
             android:layout_width="52dp"
             android:layout_height="52dp"
             >
             <ImageView
+                android:id="@+id/temp"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/back_btn"
@@ -29,10 +31,10 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_toRightOf="@+id/btn_study_back"
+            android:layout_toRightOf="@+id/btn_select_back"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_width="80dp"
+            android:layout_height="24dp"
             android:src="@drawable/logotype"
             />
 

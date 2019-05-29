@@ -8,6 +8,8 @@ import android.os.HandlerThread
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.PixelCopy
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.google.ar.core.Pose
 import com.google.ar.core.TrackingState
@@ -45,7 +47,18 @@ class StudyScanActivity : AppCompatActivity() {
         arFragment.planeDiscoveryController.hide()
         arFragment.arSceneView.scene.addOnUpdateListener(this::onUpdateFrame)
         btn_scan_check.setOnClickListener {
+            image_scan_state.visibility = View.VISIBLE
+            val slowlyDisappear = AnimationUtils.loadAnimation(this,R.anim.fade_out)
+            image_scan_state.animation = slowlyDisappear
             scan()
+            val handler = Handler()
+            handler.postDelayed(Runnable {
+                image_scan_state.visibility = View.GONE
+            }, 500)
+        }
+
+        btn_scan_back.setOnClickListener {
+            finish()
         }
     }
 
@@ -93,9 +106,11 @@ class StudyScanActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    Toast.makeText(applicationContext, "키워에서 찾지 못했어요.", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
                     Log.v(TAG, e.toString())
+                    Toast.makeText(applicationContext, "키워에서 찾지 못했어요.", Toast.LENGTH_SHORT).show()
                 }
     }
 
