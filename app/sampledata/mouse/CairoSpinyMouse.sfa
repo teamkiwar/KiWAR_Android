@@ -37,7 +37,7 @@
     file: 'sampledata/mouse/CairoSpinyMouse.obj',
     name: 'CairoSpinyMouse',
     recenter: 'root',
-    scale: 0.02
+    scale: 0.08
   },
   samplers: [
     {

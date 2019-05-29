@@ -37,7 +37,7 @@
     file: 'sampledata/goat/Mesh_Goat.obj',
     name: 'Mesh_Goat',
     recenter: 'root',
-    scale: 0.001,
+    scale: 0.002,
   },
   samplers: [
     {

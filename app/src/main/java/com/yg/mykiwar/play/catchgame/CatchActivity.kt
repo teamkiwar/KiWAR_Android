@@ -39,6 +39,7 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var sceneFromFragment : PlayFragment
     private var isLoaded : Boolean = false
     private var answerCount = 0
+    private var dictCount = 0
 
     var setting = false
     val request = 1001
@@ -175,7 +176,9 @@ class CatchActivity : AppCompatActivity(), View.OnClickListener {
             //name은 한글
             anchorNode.removeChild(selectedNode)
             Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
-            CommonData.dictList.add(AnimalList.getMatch()[name]!!)
+            dictCount = CommonData.dictList.size
+            val order = 'A' + dictCount
+            CommonData.dictList.add(order.toString() + " " + AnimalList.getMatch()[name]!!)
             //도감용 저장은 영어이름으로 할 것.
             SharedPreferenceController.setDictList(this, CommonData.dictList)
             //이거도 저장은 영어.

@@ -33,6 +33,7 @@ class FindActivity : AppCompatActivity() {
     private lateinit var answerList: ArrayList<String>
     private lateinit var sceneFromFragment : PlayFragment
     private var isLoaded = false
+    private var dictCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +133,7 @@ class FindActivity : AppCompatActivity() {
         val x = Random().nextInt(15) / 10f
         val y = Random().nextInt(15) / 10f
         val z = Random().nextInt(15) / 10f
-        node.localPosition = Vector3(x, y, z)
+        node.localPosition = Vector3(x-1f, y-0.5f, z)
         fragment.arSceneView.scene.addChild(anchorNode)
         node.setOnTapListener { _, _ ->
             Log.v("탭", name)
@@ -144,7 +145,9 @@ class FindActivity : AppCompatActivity() {
             if (name == answer) {
                 anchorNode.removeChild(node)
                 Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
-                CommonData.dictList.add(AnimalList.getMatch()[name]!!)
+                dictCount = CommonData.dictList.size
+                val order = 'A' + dictCount
+                CommonData.dictList.add(order.toString() + " " + AnimalList.getMatch()[name]!!)
                 //도감용 저장은 영어이름으로 할 것.
                 SharedPreferenceController.setDictList(this, CommonData.dictList)
                 //이거도 저장은 영어.

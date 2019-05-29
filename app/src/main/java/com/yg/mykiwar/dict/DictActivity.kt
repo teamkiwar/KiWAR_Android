@@ -51,7 +51,7 @@ class DictActivity : AppCompatActivity() {
             val anchor = arFragment.arSceneView.session!!.createAnchor(pose)
             for (i in 0 until dicList.size) {
                 Log.v("이름", dicList[i])
-                val nameUrl = Uri.parse(dicList[i]+".sfb")
+                val nameUrl = Uri.parse(dicList[i].split(" ")[1]+".sfb")
                 val lineCount = dicList.size / 5 + 1
                 val lineNumber = i%5
                 val colNumber = i / 5

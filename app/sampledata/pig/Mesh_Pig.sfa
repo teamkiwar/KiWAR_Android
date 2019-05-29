@@ -37,7 +37,7 @@
     file: 'sampledata/pig/Mesh_Pig.obj',
     name: 'Mesh_Pig',
     recenter: 'root',
-    scale: 0.001,
+    scale: 0.004,
   },
   samplers: [
     {
